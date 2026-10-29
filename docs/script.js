@@ -8,6 +8,35 @@
     try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {}
   }
 
+  var BN = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+  function bn(num) {
+    return String(num).replace(/\d/g, function (d) { return BN[+d]; });
+  }
+
+  /* short title of each day — used for the sidebar trail labels */
+  var DAYS = [
+    "AI আসলে কী?", "AI কী পারে, আর কী পারে না", "AI ভুল করে — কীভাবে বুঝবেন",
+    "ভালো প্রশ্ন করার নিয়ম", "AI কি আপনার তথ্য নিয়ে নেয়?", "AI ব্যবহার করা কি অসততা?",
+    "প্রথম সপ্তাহের রিভিউ", "দৈনন্দিন কাজে AI", "লেখার কাজে AI", "ভাষার দেয়াল",
+    "ছবি দিয়ে প্রশ্ন করা", "ভয়েসে কথা বলা", "কাগজপত্র বোঝা", "দ্বিতীয় সপ্তাহের রিভিউ",
+    "নতুন কিছু শেখা", "অন্যকে শেখানো", "প্রথম প্রজেক্ট", "সৃজনশীল কাজ", "ছবি বানানো",
+    "AI-এর উত্তর যাচাই করা", "তৃতীয় সপ্তাহের রিভিউ", "AI দিয়ে প্রতারণা",
+    "ডিপফেক ও ভুয়া ছবি-ভিডিও", "চারপাশের মানুষের নিরাপত্তা", "কাজের জায়গায় AI",
+    "ভবিষ্যতের দক্ষতা", "AI-এর সীমা ও নৈতিকতা", "নিজের একটা অভ্যাস তৈরি",
+    "চতুর্থ সপ্তাহের রিভিউ", "আপনি এখন কী পারেন"
+  ];
+
+  function doneDays() {
+    var d = get("aib_done", []);
+    if (!d || typeof d.length !== "number") return [];
+    var out = [];
+    for (var i = 0; i < d.length; i++) {
+      var n = parseInt(d[i], 10);
+      if (n >= 1 && n <= 30 && out.indexOf(n) === -1) out.push(n);
+    }
+    return out;
+  }
+
   /* font-size control */
   var fontStep = get("aib_font", 0);
   function applyFont(s) {
@@ -96,32 +125,85 @@
   });
 
   /* ৩০ দিনের progress trail */
+  var done = doneDays();
   var tracks = document.querySelectorAll(".trail-track");
   if (tracks.length) {
-    var done = get("aib_done", []);
     var curDay = parseInt(document.body.getAttribute("data-day") || "0", 10);
     var html = "";
     for (var n = 1; n <= 30; n++) {
-      var live = n <= 30;
-      var cls = "trail-dot" + (done.indexOf(n) !== -1 ? " is-complete" : "") + (n === curDay ? " is-current" : "") + (live ? "" : " is-locked");
-      html += live
-        ? '<a href="din-' + n + '.html" class="' + cls + '" aria-label="দিন ' + n + '">' + n + "</a>"
-        : '<span class="' + cls + '" aria-label="দিন ' + n + ' (শীঘ্রই আসছে)">' + n + "</span>";
+      var isDone = done.indexOf(n) !== -1;
+      var cls = "trail-dot" + (isDone ? " is-complete" : "") + (n === curDay ? " is-current" : "");
+      var label = "দিন " + bn(n) + ": " + DAYS[n - 1] + (isDone ? " — সম্পূর্ণ" : "");
+      html += '<a href="din-' + n + '.html" class="' + cls + '" aria-label="' + label + '"'
+        + (n === curDay ? ' aria-current="page"' : "")
+        + '><span class="td-n">' + bn(n) + '</span><span class="td-t">' + DAYS[n - 1] + "</span></a>";
     }
     tracks.forEach(function (t) { t.innerHTML = html; });
   }
+
+  /* sidebar progress line on day pages */
+  document.querySelectorAll("[data-trail-count]").forEach(function (el) {
+    el.textContent = "৩০ দিনের মধ্যে " + bn(done.length) + " দিন সম্পূর্ণ";
+  });
 
   /* দিন সম্পূর্ণ button */
   var completeBtn = document.querySelector("[data-day-complete]");
   if (completeBtn) {
     var day = parseInt(completeBtn.getAttribute("data-day-complete"), 10);
     var confirmBox = document.querySelector(".day-done-confirm");
-    function showDone() { completeBtn.hidden = true; if (confirmBox) confirmBox.hidden = false; }
-    if (get("aib_done", []).indexOf(day) !== -1) showDone();
+    var showDone = function () { completeBtn.hidden = true; if (confirmBox) confirmBox.hidden = false; };
+    if (done.indexOf(day) !== -1) showDone();
     completeBtn.addEventListener("click", function () {
       var d = get("aib_done", []);
+      if (!d || typeof d.length !== "number") d = [];
       if (d.indexOf(day) === -1) { d.push(day); set("aib_done", d); }
       showDone();
     });
+  }
+
+  /* ---------- homepage: completed day cards + progress dashboard ---------- */
+  document.querySelectorAll("[data-day-card]").forEach(function (a) {
+    var n = parseInt(a.getAttribute("data-day-card"), 10);
+    if (done.indexOf(n) === -1) return;
+    a.classList.add("is-done");
+    var s = document.createElement("span");
+    s.className = "sr-only";
+    s.textContent = " — সম্পূর্ণ";
+    a.appendChild(s);
+  });
+
+  var fill = document.querySelector("[data-prog-fill]");
+  if (fill) {
+    var count = done.length;
+    var pct = Math.round((count / 30) * 100);
+    fill.style.width = pct + "%";
+
+    var bar = document.querySelector("[data-prog-bar]");
+    if (bar) bar.setAttribute("aria-label", "অগ্রগতি: ৩০ দিনের মধ্যে " + bn(count) + " দিন সম্পূর্ণ");
+
+    document.querySelectorAll("[data-prog-done], [data-prog-done2]").forEach(function (el) {
+      el.textContent = bn(count);
+    });
+    var leftEl = document.querySelector("[data-prog-left]");
+    if (leftEl) leftEl.textContent = bn(30 - count);
+
+    var next = 0;
+    for (var k = 1; k <= 30; k++) { if (done.indexOf(k) === -1) { next = k; break; } }
+
+    var cta = document.querySelector("[data-prog-cta]");
+    var ctaLabel = document.querySelector("[data-prog-cta-label]");
+    var sub = document.querySelector("[data-prog-sub]");
+    if (next === 0) {
+      if (cta) cta.setAttribute("href", "din-1.html");
+      if (ctaLabel) ctaLabel.textContent = "আবার শুরু থেকে দেখুন";
+      if (sub) sub.textContent = "৩০ দিনই সম্পূর্ণ হয়েছে। চাইলে যেকোনো দিন আবার দেখে নিতে পারেন।";
+    } else if (count === 0) {
+      if (cta) cta.setAttribute("href", "din-1.html");
+      if (ctaLabel) ctaLabel.textContent = "দিন ১ থেকে শুরু করুন";
+    } else {
+      if (cta) cta.setAttribute("href", "din-" + next + ".html");
+      if (ctaLabel) ctaLabel.textContent = "দিন " + bn(next) + " থেকে চালিয়ে যান";
+      if (sub) sub.textContent = "চালিয়ে যান — পরের পাঠ দিন " + bn(next) + "।";
+    }
   }
 })();

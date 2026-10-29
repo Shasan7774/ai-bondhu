@@ -28,7 +28,7 @@
 <meta name="twitter:image:alt" content="এআই বন্ধু — দিনে ১০ মিনিট, সহজ বাংলায় AI শেখার ৩০ দিনের ফ্রি কোর্স।">
 <link rel="stylesheet" href="style.css">
 </head>
-<body data-day="14">
+<body class="day-page" data-day="14">
 <a class="skip-link" href="#main">মূল কনটেন্টে যান</a>
 
 <header class="site-header">
@@ -39,14 +39,38 @@
       <button type="button" data-font-inc aria-label="লেখা বড় করুন">ক+</button>
     </div>
   </div>
-  <nav class="trail" aria-label="৩০ দিনের অগ্রগতি">
-    <p class="trail-label">আপনার যাত্রা</p>
-    <div class="trail-track"></div>
-    <noscript>
-      <p><a href="din-1.html">১</a> · <a href="din-2.html">২</a> · <a href="din-3.html">৩</a> · <a href="din-4.html">৪</a> · <a href="din-5.html">৫</a> · <a href="din-6.html">৬</a> · <a href="din-7.html">৭</a> · <a href="din-8.html">৮</a> · <a href="din-9.html">৯</a> · <a href="din-10.html">১০</a> · <a href="din-11.html">১১</a> · <a href="din-12.html">১২</a> · <a href="din-13.html">১৩</a> · <a href="din-14.html">১৪</a> · <a href="din-15.html">১৫</a> · <a href="din-16.html">১৬</a> · <a href="din-17.html">১৭</a> · <a href="din-18.html">১৮</a> · <a href="din-19.html">১৯</a> · <a href="din-20.html">২০</a> · <a href="din-21.html">২১</a> · <a href="din-22.html">২২</a> · <a href="din-23.html">২৩</a> · <a href="din-24.html">২৪</a> · <a href="din-25.html">২৫</a> · <a href="din-26.html">২৬</a> · <a href="din-27.html">২৭</a> · <a href="din-28.html">২৮</a> · <a href="din-29.html">২৯</a> · <a href="din-30.html">৩০</a></p>
-    </noscript>
-  </nav>
 </header>
+
+<div class="page-grid">
+
+<aside class="day-side" aria-label="পাঠের নেভিগেশন">
+  <a class="side-home" href="index.html">
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    সব পাঠের তালিকা
+  </a>
+    <nav class="trail" aria-label="৩০ দিনের অগ্রগতি">
+      <p class="trail-label">আপনার যাত্রা</p>
+      <p class="trail-count" data-trail-count>৩০ দিনের পথ</p>
+      <div class="trail-track"></div>
+      <noscript>
+        <p><a href="din-1.html">১</a> · <a href="din-2.html">২</a> · <a href="din-3.html">৩</a> · <a href="din-4.html">৪</a> · <a href="din-5.html">৫</a> · <a href="din-6.html">৬</a> · <a href="din-7.html">৭</a> · <a href="din-8.html">৮</a> · <a href="din-9.html">৯</a> · <a href="din-10.html">১০</a> · <a href="din-11.html">১১</a> · <a href="din-12.html">১২</a> · <a href="din-13.html">১৩</a> · <a href="din-14.html">১৪</a> · <a href="din-15.html">১৫</a> · <a href="din-16.html">১৬</a> · <a href="din-17.html">১৭</a> · <a href="din-18.html">১৮</a> · <a href="din-19.html">১৯</a> · <a href="din-20.html">২০</a> · <a href="din-21.html">২১</a> · <a href="din-22.html">২২</a> · <a href="din-23.html">২৩</a> · <a href="din-24.html">২৪</a> · <a href="din-25.html">২৫</a> · <a href="din-26.html">২৬</a> · <a href="din-27.html">২৭</a> · <a href="din-28.html">২৮</a> · <a href="din-29.html">২৯</a> · <a href="din-30.html">৩০</a></p>
+      </noscript>
+    </nav>
+  <nav class="side-jump" aria-label="এই পাঠের অংশ">
+    <p class="side-jump-title">এই পাঠে</p>
+    <ul>
+      <li><a href="#h-today">আজকের কথা</a></li>
+      <li><a href="#h-self">নিজে করুন</a></li>
+      <li><a href="#h-together">একসাথে করুন</a></li>
+      <li><a href="#h-key">আজকের মূল কথা</a></li>
+      <li><a href="#h-quiz">মিলিয়ে নিন</a></li>
+    </ul>
+  </nav>
+  <div class="font-ctrl" role="group" aria-label="লেখার আকার নিয়ন্ত্রণ">
+    <button type="button" data-font-dec aria-label="লেখা ছোট করুন">ক-</button>
+    <button type="button" data-font-inc aria-label="লেখা বড় করুন">ক+</button>
+  </div>
+</aside>
 
 <main id="main">
 <svg class="icon-defs" aria-hidden="true" focusable="false">
@@ -93,6 +117,10 @@
   <path d="M6 37c0-8 6-13 14-13s14 5 14 13" fill="none" stroke="#2A2724" stroke-width="2.2" stroke-linecap="round"/>
   <circle cx="44" cy="13" r="7" fill="none" stroke="#0F6E6E" stroke-width="2.2"/>
   <path d="M30 37c0-8 6-13 14-13s14 5 14 13" fill="none" stroke="#0F6E6E" stroke-width="2.2" stroke-linecap="round"/>
+</symbol>
+<symbol id="ic-copy" viewBox="0 0 24 24">
+  <rect x="8" y="8" width="12" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+  <path d="M5 15V5a1 1 0 0 1 1-1h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </symbol>
 </defs>
 </svg>
@@ -196,7 +224,7 @@
         <div class="prompt-box">
           <blockquote id="d14-prompt-1">এই ছবিতে কী লেখা আছে, সহজ বাংলায় বুঝিয়ে বলো। আর এটা নিয়ে আমার কী করা উচিত, সেটাও বলো।</blockquote>
           <button type="button" class="copy-btn" data-copy="d14-prompt-1">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-copy"></use></svg>
             <span class="copy-label">কপি করুন</span>
           </button>
         </div>
@@ -271,6 +299,21 @@
 
   <div class="section-divider" aria-hidden="true"><svg viewBox="0 0 160 20"><use href="#ic-divider"></use></svg></div>
 
+  <div class="day-complete-wrap">
+    <button type="button" class="btn-primary" data-day-complete="14">দিন সম্পূর্ণ করুন</button>
+    <noscript><a href="din-15.html" class="btn-next">পরবর্তী দিনে যান — দিন ১৫ →</a></noscript>
+    <div class="day-done-confirm" role="status" aria-live="polite" hidden>
+      <p class="done-msg">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-check"></use></svg>
+        আজকের পাঠ সম্পূর্ণ হয়েছে। চালিয়ে যান এভাবেই।
+      </p>
+      <a href="din-15.html" class="btn-next">পরবর্তী দিনে যান — দিন ১৫ →</a>
+    </div>
+  </div>
+
+</main>
+
+<aside class="day-rail" aria-label="আজকের সারসংক্ষেপ ও পরের পাঠ">
   <div class="share-wrap">
     <figure class="share-card">
       <svg class="share-motif" viewBox="0 0 300 180" aria-hidden="true" preserveAspectRatio="none">
@@ -287,31 +330,33 @@
     <p class="share-caption">ভালো লাগলে বন্ধুদের সাথে শেয়ার করুন।</p>
   </div>
 
-  <div class="day-complete-wrap">
-    <button type="button" class="btn-primary" data-day-complete="14">দিন সম্পূর্ণ করুন</button>
-    <noscript><a href="din-15.html" class="btn-next">পরবর্তী দিনে যান — দিন ১৫ →</a></noscript>
-    <div class="day-done-confirm" role="status" aria-live="polite" hidden>
-      <p class="done-msg">
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-check"></use></svg>
-        আজকের পাঠ সম্পূর্ণ হয়েছে। চালিয়ে যান এভাবেই।
-      </p>
-      <a href="din-15.html" class="btn-next">পরবর্তী দিনে যান — দিন ১৫ →</a>
-    </div>
-  </div>
-
   <div class="teaser-box">
     <p>কাল থেকে দেখব, AI-কে দিয়ে কীভাবে যেকোনো নতুন বিষয় শেখা যায়, একজন ধৈর্যশীল শিক্ষকের মতো।</p>
   </div>
-</main>
 
-<nav class="day-nav" aria-label="পাঠের মধ্যে চলাচল">
-  <div class="nav-prev"><a href="din-13.html">
-    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    পূর্ববর্তী দিন</a></div>
-  <div class="nav-next"><a href="din-15.html">পরবর্তী দিন
-    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </a></div>
-</nav>
+  <nav class="day-nav" aria-label="পাঠের মধ্যে চলাচল">
+    <div class="nav-prev"><a href="din-13.html">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      পূর্ববর্তী দিন</a></div>
+    <div class="nav-next"><a href="din-15.html">পরবর্তী দিন
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></div>
+  </nav>
+</aside>
+
+</div>
+
+<footer class="site-footer site-footer--slim">
+  <nav class="band-inner foot-slim" aria-label="সাইটের অন্য অংশ">
+    <a href="index.html">এআই বন্ধু</a><span class="foot-sep">·</span>
+    <a href="aay.html">AI দিয়ে আয়</a><span class="foot-sep">·</span>
+    <a href="tools.html">AI টুল গাইড</a><span class="foot-sep">·</span>
+    <a href="shobdokosh.html">শব্দকোষ</a><span class="foot-sep">·</span>
+    <a href="prompt.html">প্রম্পট লাইব্রেরি</a><span class="foot-sep">·</span>
+    <a href="pesha.html">পেশা অনুযায়ী AI</a><span class="foot-sep">·</span>
+    <a href="https://github.com/Shasan7774/ai-bondhu">GitHub</a>
+  </nav>
+</footer>
 
 <script src="script.js"></script>
 </body>

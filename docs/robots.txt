@@ -2,5 +2,4 @@
 User-agent: *
 Allow: /
 
-# Replace the placeholder host below with the real domain before launch.
 Sitemap: https://shasan7774.github.io/ai-bondhu/sitemap.xml

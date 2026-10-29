@@ -1,0 +1,3 @@
+tools-guide.md: combining_nukta_total=89 pre(ya=0,rha=0,dha=0) decomp(ya=85,rha=4,dha=0)
+glossary.md: combining_nukta_total=148 pre(ya=0,rha=0,dha=0) decomp(ya=128,rha=20,dha=0)
+prompt-library.md: combining_nukta_total=145 pre(ya=0,rha=0,dha=0) decomp(ya=132,rha=13,dha=0)
