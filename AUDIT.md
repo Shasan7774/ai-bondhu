@@ -1,6 +1,6 @@
 # এআই বন্ধু — pre-launch quality audit
 
-**Scope:** `site/` (index.html, 404.html, din-1…din-30.html, style.css, script.js, robots.txt, sitemap.xml, favicon.svg, share.png) and `content/` (day-01…day-30.md, landing-copy.md).
+**Scope:** `docs/` (index.html, 404.html, din-1…din-30.html, style.css, script.js, robots.txt, sitemap.xml, favicon.svg, share.png) and `content/` (day-01…day-30.md, landing-copy.md).
 **Method:** read-only. Scripted checks over all 31 HTML pages + 30 markdown files (Python/regex/HTMLParser), plus full manual reads of `script.js`, `style.css`, `index.html`, `404.html`, `din-1.html`, `din-14.html`, and the complete text of days 2, 5, 8, 10, 13, 16, 17, 18, 20, 23, 27, 30.
 **Nothing in this repository was modified.** This file is the only thing written.
 
@@ -28,19 +28,19 @@
 ## B1 — Placeholder production domain in 158 places across every page, robots.txt and sitemap.xml
 
 **Files / lines**
-- `site/index.html:16` (canonical), `:26` (og:url), `:27` (og:image), `:35` (twitter:image)
-- `site/din-N.html` for N = 1…30 — four occurrences each, e.g. `site/din-1.html:8, :18, :19, :27`
-- `site/robots.txt:6` — `Sitemap: https://ai-bondhu.example/sitemap.xml`
-- `site/sitemap.xml` — 32 occurrences (comment header + 31 `<loc>` elements)
-- `site/index.html:8–15` — a 7-line English HTML comment headed `LAUNCH BLOCKER` shipped to every visitor's page source
+- `docs/index.html:16` (canonical), `:26` (og:url), `:27` (og:image), `:35` (twitter:image)
+- `docs/din-N.html` for N = 1…30 — four occurrences each, e.g. `docs/din-1.html:8, :18, :19, :27`
+- `docs/robots.txt:6` — `Sitemap: https://ai-bondhu.example/sitemap.xml`
+- `docs/sitemap.xml` — 32 occurrences (comment header + 31 `<loc>` elements)
+- `docs/index.html:8–15` — a 7-line English HTML comment headed `LAUNCH BLOCKER` shipped to every visitor's page source
 
 **What is wrong.** `https://ai-bondhu.example` is a reserved-TLD placeholder, not a real host. Every page's `canonical`, `og:url`, `og:image` and `twitter:image` point at it. The course's own distribution model is social sharing — day 1 through day 30 each end with *"ভালো লাগলে বন্ধুদের সাথে শেয়ার করুন"* and a share card. When a link is pasted into Facebook or WhatsApp, the crawler resolves `og:image` against `ai-bondhu.example`, gets nothing, and renders a bare link with no image and no title card. `share.png` exists locally and is correct, but no crawler will ever reach it at that URL. The canonical tags additionally tell search engines the real site is a duplicate of a host that does not exist.
 
 The project already knows: `index.html:9` literally says `LAUNCH BLOCKER`, and `sitemap.xml:3` says `PLACEHOLDER DOMAIN … Replace every occurrence below with the real published origin before launch`.
 
-**Fix.** Replace all 158 occurrences of `https://ai-bondhu.example` with the real origin (e.g. `https://shasan7774.github.io/ai-bondhu`). Then delete the `LAUNCH BLOCKER` comment block at `index.html:8–15` and the `PLACEHOLDER DOMAIN` comment at `sitemap.xml:2–6`. Verify afterwards with `grep -rc "ai-bondhu.example" site/` returning 0 everywhere.
+**Fix.** Replace all 158 occurrences of `https://ai-bondhu.example` with the real origin (e.g. `https://shasan7774.github.io/ai-bondhu`). Then delete the `LAUNCH BLOCKER` comment block at `index.html:8–15` and the `PLACEHOLDER DOMAIN` comment at `sitemap.xml:2–6`. Verify afterwards with `grep -rc "ai-bondhu.example" docs/` returning 0 everywhere.
 
-**Verification:** [ALL] — counted across all 33 files in `site/`.
+**Verification:** [ALL] — counted across all 33 files in `docs/`.
 
 *Already tracked:* `LAUNCH-CHECKLIST.md:17–25` names this item and prescribes the same verification (`grep` for zero hits). It is listed here because it is still unfixed in the code, not because it is unknown to the project.
 
@@ -50,14 +50,14 @@ The project already knows: `index.html:9` literally says `LAUNCH BLOCKER`, and `
 
 **Files / lines**
 - `content/day-08.md:20` — *"নিজের আসল মাসিক আয় আর প্রধান খরচগুলো (বাসা ভাড়া, বাজার, বিদ্যুৎ বিল, যাতায়াত) মনে মনে ঠিক করে নিন।"*
-- `content/day-08.md:23` / `site/din-8.html:209` — the copy-able prompt `আমার মাসিক আয় [সংখ্যা] টাকা। খরচ — বাসা ভাড়া [সংখ্যা], বাজার খরচ [সংখ্যা], বিদ্যুৎ বিল [সংখ্যা], যাতায়াত [সংখ্যা]। … একটা সহজ মাসিক বাজেট বানিয়ে দাও, যাতে প্রতি মাসে কিছু টাকা জমানো যায়।`
+- `content/day-08.md:23` / `docs/din-8.html:209` — the copy-able prompt `আমার মাসিক আয় [সংখ্যা] টাকা। খরচ — বাসা ভাড়া [সংখ্যা], বাজার খরচ [সংখ্যা], বিদ্যুৎ বিল [সংখ্যা], যাতায়াত [সংখ্যা]। … একটা সহজ মাসিক বাজেট বানিয়ে দাও, যাতে প্রতি মাসে কিছু টাকা জমানো যায়।`
 - Contradicts `content/day-05.md` — *"আপনি যা কিছু AI-কে টাইপ করে পাঠান, সেটা একটা কোম্পানির সার্ভারে যায়"* and the day-5 rule that personal/sensitive data stays out.
 
 **What is wrong.** Three days after teaching that anything typed into AI lands on a company's server and that personal data should be withheld, the course instructs the reader to enter their actual salary, rent, utility and transport figures — and then produces a savings plan from them. Day 8 carries **no** privacy reminder, and **no** "check important money decisions with a qualified person" caveat. This is the only one of the three advice-domain lessons missing it: day 10 has it, day 13 has it twice (*"একজন ডাক্তার, আইনজীবী বা সংশ্লিষ্ট বিশেষজ্ঞের সাথে অবশ্যই মিলিয়ে নিতে হবে"*), day 2 has the medical one, day 23 and 27 have theirs. Day 8 and day 23 are the only money lessons and only day 23 is safe.
 
 The damage is to trust, not just safety: the lesson's own authority rests on the course being consistent about when to hold data back. A reader who notices the contradiction has reason to doubt day 5.
 
-**Fix.** Two additions to `content/day-08.md` and the matching `site/din-8.html`:
+**Fix.** Two additions to `content/day-08.md` and the matching `docs/din-8.html`:
 1. In **আজকের কথা**, after the explanation of what AI can organise, add a sentence in the same voice as day 13 — that AI organises the numbers you give it but is not a financial adviser, and that any real decision about loans, savings products or large sums should be checked with a qualified person.
 2. In **নিজে করুন** step 2, add the day-5 callback — e.g. that round or approximate figures are enough, and that account numbers, card details and bKash/Nagad information never go in.
 
@@ -69,7 +69,7 @@ The damage is to trust, not just safety: the lesson's own authority rests on the
 
 ## S1 — 15 copy-able prompts hand the reader unresolved `[…]` placeholders, and the convention is never explained anywhere
 
-**Files / lines** (all `site/din-N.html`, with the matching `content/day-NN.md` blockquote)
+**Files / lines** (all `docs/din-N.html`, with the matching `content/day-NN.md` blockquote)
 
 | File:line | id | Placeholders |
 |---|---|---|
@@ -103,7 +103,7 @@ Keep the brackets themselves — removing them would lose the signal entirely. N
 
 ## S2 — The "reveal" device is inert on all 30 pages: the day's question is hidden inside the collapsed answer
 
-**Files / lines:** `site/din-N.html` for N = 1…30 — e.g. `din-1.html:139–142`, `din-14.html:143–146`, `din-30.html:139–142`.
+**Files / lines:** `docs/din-N.html` for N = 1…30 — e.g. `din-1.html:139–142`, `din-14.html:143–146`, `din-30.html:139–142`.
 
 **What is wrong.** Every page uses the identical summary text — verified: `আপনার কী মনে হয়? (ট্যাপ করে দেখুন)` appears on 30/30 pages and nothing else does. The day's actual reflective question lives **inside** `<p class="reveal-answer">`, immediately followed by its answer. On din-14: the summary says only "আপনার কী মনে হয়?", and the hidden paragraph opens *"এই সপ্তাহে AI দিয়ে শেখা কাজগুলোর মধ্যে কোনটা আপনার মনে হয় সবচেয়ে বেশি কাজে লাগবে?"* and answers itself in the next clause.
 
@@ -122,7 +122,7 @@ The source data for this is already in `content/day-NN.md` as the two separate p
 
 ## S3 — With JavaScript disabled, the quizzes have no answers and the day-completion flow disappears
 
-**Files / lines:** `site/script.js:59–80` (quiz), `:99–110` (completion); `site/din-N.html` — `<p class="quiz-feedback" … hidden>` and `<div class="day-done-confirm" … hidden>` on all 30 pages.
+**Files / lines:** `docs/script.js:59–80` (quiz), `:99–110` (completion); `docs/din-N.html` — `<p class="quiz-feedback" … hidden>` and `<div class="day-done-confirm" … hidden>` on all 30 pages.
 
 **What is wrong.** Three JS-only behaviours, measured across all 30 pages:
 - **Quizzes (60 questions, 30/30 pages).** The correct answer lives only in `data-correct="true"` and the explanation only in `data-explain`. With JS off, every option is an inert button and no `<noscript>` fallback exists on any page. The reader sees the question and three options and can never learn which is right. The markdown already holds the answer in a readable form (`**সঠিক:** গ — …`); it is simply not emitted.
@@ -161,7 +161,7 @@ with the Bengali numeral matching the target day. `.btn-next` is already styled 
 
 ## S5 — Day 30 renders a dead, unstyled "পরবর্তী দিন" label, and the course ends with no way forward
 
-**Files / lines:** `site/din-30.html:294` — `<div class="nav-next disabled"><span>পরবর্তী দিন</span></div>`; `site/style.css:309` — only `.nav-prev.disabled{ visibility:hidden; }` exists.
+**Files / lines:** `docs/din-30.html:294` — `<div class="nav-next disabled"><span>পরবর্তী দিন</span></div>`; `docs/style.css:309` — only `.nav-prev.disabled{ visibility:hidden; }` exists.
 
 **What is wrong.** There is no `.nav-next.disabled` rule in the stylesheet. The pill styling at `style.css:303` targets `.nav-prev a, .nav-next a`, so a bare `<span>` gets none of it. Day 30 therefore shows plain inline text reading "পরবর্তী দিন" in the bottom-right, with no border, no link, and no indication it is intentionally inactive — it reads as a broken link on the final page of the course. Day 1 does this correctly because `.nav-prev.disabled` is hidden.
 
@@ -175,7 +175,7 @@ Separately, day 30 is a complete dead end: the completion panel (`din-30.html:27
 
 ## S6 — Interface boundaries fail WCAG 2.1 SC 1.4.11 at 1.31–1.39:1, including the custom checkbox that has no other visual form
 
-**Files / lines:** `site/style.css:14` (`--border:#E3DACB`), used as the sole boundary at `:198` (`.step-check`), `:243` (`.quiz-options button`), `:288` (`.signup-form input`), `:306` (`.nav-prev a, .nav-next a`), `:101` (`.trail-dot`).
+**Files / lines:** `docs/style.css:14` (`--border:#E3DACB`), used as the sole boundary at `:198` (`.step-check`), `:243` (`.quiz-options button`), `:288` (`.signup-form input`), `:306` (`.nav-prev a, .nav-next a`), `:101` (`.trail-dot`).
 
 **Measured contrast** (computed, WCAG 2.x relative-luminance formula):
 
@@ -196,7 +196,7 @@ Note this is a *non-text* contrast issue only. **Every text pair in the palette 
 
 ## S7 — 32 illustrations carry an `aria-label` that an `aria-hidden="true"` parent cancels
 
-**Files / lines:** `site/index.html:76–77`, `site/404.html:27–28`, and `site/din-N.html:122–123` for all N = 1…30 — the pattern `<div class="hero-art" aria-hidden="true"> <svg role="img" aria-label="…">`.
+**Files / lines:** `docs/index.html:76–77`, `docs/404.html:27–28`, and `docs/din-N.html:122–123` for all N = 1…30 — the pattern `<div class="hero-art" aria-hidden="true"> <svg role="img" aria-label="…">`.
 
 **What is wrong.** `aria-hidden="true"` on an ancestor removes the entire subtree from the accessibility tree, so the carefully written Bengali alt text — e.g. din-5's *"একটি ঢাল কয়েকটি ব্যক্তিগত জিনিস রক্ষা করছে — পরিচয়…"* — never reaches a screen reader. The markup contradicts itself: someone wrote descriptions intending them to be announced, and a wrapper silences all 32.
 
@@ -212,11 +212,11 @@ The 567 genuinely decorative SVGs (dividers, step icons, button glyphs) are corr
 
 ## S8 — Day 2 assumes the reader has a child, breaking the deliberate universalisation
 
-**Files / lines:** `content/day-02.md:13` and `site/din-2.html:180` — *"তাকে বললে তিনি সুন্দর করে একটা দরখাস্ত লিখে দিতে পারবেন, কোনো কঠিন শব্দের মানে বুঝিয়ে দিতে পারবেন, **আপনার সন্তানের** পড়া সহজ করে বুঝিয়ে দিতে পারবেন।"*
+**Files / lines:** `content/day-02.md:13` and `docs/din-2.html:180` — *"তাকে বললে তিনি সুন্দর করে একটা দরখাস্ত লিখে দিতে পারবেন, কোনো কঠিন শব্দের মানে বুঝিয়ে দিতে পারবেন, **আপনার সন্তানের** পড়া সহজ করে বুঝিয়ে দিতে পারবেন।"*
 
 **What is wrong.** This is second-person possessive — it tells the reader *their* child's studies, as a given. The course is otherwise rigorous about not assuming family structure: the একসাথে করুন sub-line is identical on 30/30 pages and reads *"সন্তান, বাবা-মা, বন্ধু বা সহকর্মী — যে কারো সাথে।"*, which deliberately offers four alternatives. The index audience grid lists শিক্ষার্থী, চাকরিজীবী, শিক্ষক, বাবা-মা, প্রবীণ, যে কেউ. Day 2 is the only place the universalisation slips.
 
-**Fix.** Replace the clause with a non-possessive example, e.g. *"কোনো পড়ার বিষয় সহজ করে বুঝিয়ে দিতে পারবেন"* — same meaning, no assumption. Apply to both `content/day-02.md:13` and `site/din-2.html:180`.
+**Fix.** Replace the clause with a non-possessive example, e.g. *"কোনো পড়ার বিষয় সহজ করে বুঝিয়ে দিতে পারবেন"* — same meaning, no assumption. Apply to both `content/day-02.md:13` and `docs/din-2.html:180`.
 
 The one other hit, `content/day-18.md` — *"নতুন দোকান বা সন্তানের নাম"* — is a list of generic examples of things one might name, not an assertion about the reader. No change needed.
 
@@ -224,7 +224,7 @@ The one other hit, `content/day-18.md` — *"নতুন দোকান বা
 
 ## S9 — `.copy-btn:hover` drops to 4.24:1, below AA for its text size
 
-**File / line:** `site/style.css:187` — `.copy-btn:hover{ background:var(--terracotta); color:#fff; }`
+**File / line:** `docs/style.css:187` — `.copy-btn:hover{ background:var(--terracotta); color:#fff; }`
 
 **What is wrong.** `#FFFFFF` on `#C25E3A` measures **4.24:1**. The button text is `font-size:.92rem` bold ≈ 16.5px at the 18px root — below the 18.66px-bold threshold for WCAG "large text", so it needs 4.5:1 and misses. The resting state (`#9A4A2C` on white, **6.19:1**) is fine; only hover fails. Touch users never see it, desktop users do.
 
@@ -236,7 +236,7 @@ The same pair appears at `style.css:291–293` on `.signup-form button`, but `.s
 
 ## S10 — Two `<nav>` landmarks per day page, only one labelled
 
-**Files / lines:** `site/din-N.html` — `<nav class="trail" aria-label="৩০ দিনের অগ্রগতি">` (labelled) and `<nav class="day-nav">` at the page foot (unlabelled), on all 30 pages; also `site/404.html:59`.
+**Files / lines:** `docs/din-N.html` — `<nav class="trail" aria-label="৩০ দিনের অগ্রগতি">` (labelled) and `<nav class="day-nav">` at the page foot (unlabelled), on all 30 pages; also `docs/404.html:59`.
 
 **What is wrong.** When a page has more than one landmark of the same type, each needs a distinguishing accessible name, or a screen-reader user navigating by landmark hears "navigation" twice with no way to tell the 30-day trail from the prev/next pair.
 
@@ -250,7 +250,7 @@ Related, smaller: on `index.html:234` the trail is a plain `<div class="trail">`
 
 # MINOR / polish
 
-**M1 — Quiz question wording drifted from the source.** `site/din-16.html` q1 reads *"AI ব্যবহার শেখানোর সবচেয়ে ভালো উপায় কোনটা?"*; `content/day-16.md` reads *"**কাউকে** AI ব্যবহার শেখানোর সবচেয়ে ভালো উপায় কোনটা?"*. The dropped word makes the HTML version slightly ambiguous about who is being taught. This is the **only** text divergence found in 60 questions and 180 options. [ALL]
+**M1 — Quiz question wording drifted from the source.** `docs/din-16.html` q1 reads *"AI ব্যবহার শেখানোর সবচেয়ে ভালো উপায় কোনটা?"*; `content/day-16.md` reads *"**কাউকে** AI ব্যবহার শেখানোর সবচেয়ে ভালো উপায় কোনটা?"*. The dropped word makes the HTML version slightly ambiguous about who is being taught. This is the **only** text divergence found in 60 questions and 180 options. [ALL]
 
 **M2 — Teaser label style is inconsistent across the course.** Days 1–4 open the teaser with `<strong>আগামীকাল:</strong>`; days 5–29 have no bold label at all; day 30 uses `<strong>এরপর কী?</strong>`. Pick one — most likely restore `<strong>আগামীকাল:</strong>` on days 5–29 and keep day 30's variant, since it genuinely says something different. [ALL]
 

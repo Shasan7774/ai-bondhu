@@ -75,7 +75,7 @@ ai-bondhu/
 ├─ content/              Source of truth for the lessons (Markdown)
 │  ├─ day-01.md … day-30.md
 │  └─ landing-copy.md
-├─ site/                 What actually deploys — the published website
+├─ docs/                 What actually deploys — the published website
 │  ├─ index.html         Landing page
 │  ├─ din-1.html … din-30.html
 │  ├─ 404.html
@@ -94,17 +94,17 @@ Two rules about this layout:
 
 - **`content/` is the source of truth for lesson text.** If wording changes, change it there
   first, then carry it into the matching HTML page.
-- **`site/` is the only directory that deploys.** GitHub Pages serves that folder and nothing
+- **`docs/` is the only directory that deploys.** GitHub Pages serves that folder and nothing
   else. `content/` stays in the repository for authoring and history.
 
 Note the filename difference: lessons are authored as `content/day-13.md` (zero-padded) and
-published as `site/din-13.html` (not padded). `din` is the Bangla word দিন, "day".
+published as `docs/din-13.html` (not padded). `din` is the Bangla word দিন, "day".
 
 ---
 
 ## Running it locally
 
-There is no build step. The simplest way is to open `site/index.html` in a browser.
+There is no build step. The simplest way is to open `docs/index.html` in a browser.
 
 To exercise it the way a visitor will — correct relative URLs, a real 404 — serve the folder
 over HTTP instead:
@@ -161,10 +161,10 @@ Pages will publish at `https://shasan7774.github.io/ai-bondhu/` within a couple 
 
 Two things to know:
 
-- **`.nojekyll` must stay in `site/`.** Without it Pages runs Jekyll over the folder, which can
+- **`.nojekyll` must stay in `docs/`.** Without it Pages runs Jekyll over the folder, which can
   swallow files and slow deploys for no benefit here.
 - **A custom domain** is configured under the same Pages settings; doing so also requires adding
-  a `CNAME` file to `site/`. Until a domain is chosen, `sitemap.xml` and `robots.txt` carry the
+  a `CNAME` file to `docs/`. Until a domain is chosen, `sitemap.xml` and `robots.txt` carry the
   placeholder host `https://ai-bondhu.example` — see `LAUNCH-CHECKLIST.md`.
 - **Relative paths in `404.html`.** Like the rest of the site, it links to `style.css` and
   `script.js` relatively. This is correct for a flat site where almost every bad URL lands at the
@@ -235,7 +235,7 @@ One line previewing tomorrow. This becomes the `.teaser-box` at the bottom of th
 
 ### Carrying a lesson into the site
 
-The HTML page mirrors those sections with fixed markup. When editing `site/din-N.html`:
+The HTML page mirrors those sections with fixed markup. When editing `docs/din-N.html`:
 
 | Markdown section | HTML it maps to |
 |---|---|
@@ -265,9 +265,9 @@ Points to get right when hand-editing a page:
 ### Adding a day beyond 30
 
 Not currently planned, but if it happens: add `content/day-NN.md`, copy an existing
-`site/din-N.html` as the skeleton, update the day numbers above, extend the `<noscript>` day list
+`docs/din-N.html` as the skeleton, update the day numbers above, extend the `<noscript>` day list
 in `index.html` and in every day page's header, raise the loop bound in `script.js`
-(`for (var n = 1; n <= 30; n++)`), and add the new URL to `site/sitemap.xml`.
+(`for (var n = 1; n <= 30; n++)`), and add the new URL to `docs/sitemap.xml`.
 
 ---
 

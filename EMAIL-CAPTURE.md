@@ -11,7 +11,7 @@ anyway, and it quietly misleads the one group of readers who trusted you enough 
 something.
 
 So the form is gone and the decision is still open. The CSS hooks (`.signup-form`,
-`.form-note` in `site/style.css`) are still there, unused, if a real form is ever added.
+`.form-note` in `docs/style.css`) are still there, unused, if a real form is ever added.
 
 The constraint that shapes every option below: **there is no backend and no server.** GitHub
 Pages serves static files. It cannot receive a form submission, cannot store anything, cannot

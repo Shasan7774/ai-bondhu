@@ -16,12 +16,12 @@ Tick boxes as you go. Nothing here needs a second person.
 - [ ] **[BLOCKING] Replace the placeholder domain everywhere.**
       The placeholder is `https://ai-bondhu.example`. Decide the real address first — either
       `https://shasan7774.github.io/ai-bondhu/` or a custom domain — then replace it in:
-  - `site/sitemap.xml` — every `<loc>` (31 of them) and the comment at the top
-  - `site/robots.txt` — the `Sitemap:` line
+  - `docs/sitemap.xml` — every `<loc>` (31 of them) and the comment at the top
+  - `docs/robots.txt` — the `Sitemap:` line
   - `README.md` — the deploy section, if you wrote a different address there
   - any `og:url`, `og:image` or `<link rel="canonical">` tag in the `<head>` of
-    `site/index.html` and `site/din-1.html` … `site/din-30.html`
-  - `site/CNAME` — only if you are using a custom domain; create it with the bare hostname
+    `docs/index.html` and `docs/din-1.html` … `docs/din-30.html`
+  - `docs/CNAME` — only if you are using a custom domain; create it with the bare hostname
       Search the whole repo for `ai-bondhu.example` afterwards and confirm zero hits.
 
 - [ ] **[BLOCKING] Read several lessons end to end and check the Bangla voice.**
@@ -108,7 +108,7 @@ Tick boxes as you go. Nothing here needs a second person.
       [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) and confirm:
   - the title and description appear, in Bangla, not garbled
   - a preview image appears — note that this site contains no image files at all (every
-    illustration is inline SVG), so an `og:image` needs a real raster image added to `site/`,
+    illustration is inline SVG), so an `og:image` needs a real raster image added to `docs/`,
     referenced by an absolute URL. If no image exists yet, either add one or accept the
     text-only preview knowingly.
   - press **Scrape Again** after any change; Facebook caches aggressively and will keep showing
@@ -192,7 +192,7 @@ Tick boxes as you go. Nothing here needs a second person.
       gh repo create ai-bondhu --public --source=. --remote=origin --push
       ```
       Then **Settings → Pages → Deploy from a branch → `main` / `/site`**.
-      Confirm `site/.nojekyll` is present in the pushed tree.
+      Confirm `docs/.nojekyll` is present in the pushed tree.
 
 - [ ] **[BLOCKING] Smoke-test the live site before telling anyone.**
       On a phone, on mobile data, not on your laptop:
