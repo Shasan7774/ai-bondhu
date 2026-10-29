@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="এআই বন্ধু">
+  <rect width="64" height="64" rx="13" fill="#0F6E6E"/>
+  <!-- back companion -->
+  <g fill="#FBF8F4">
+    <circle cx="23" cy="22" r="7.2"/>
+    <path d="M10.5 45.5a12.5 12.5 0 0 1 25 0z"/>
+  </g>
+  <!-- front companion: charcoal halo separates it from the one behind -->
+  <g fill="none" stroke="#2A2724" stroke-width="4" stroke-linejoin="round">
+    <circle cx="41" cy="24" r="8.2"/>
+    <path d="M27.5 49a13.5 13.5 0 0 1 27 0z"/>
+  </g>
+  <g fill="#FBF8F4">
+    <circle cx="41" cy="24" r="8.2"/>
+    <path d="M27.5 49a13.5 13.5 0 0 1 27 0z"/>
+  </g>
+</svg>

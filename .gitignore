@@ -1,0 +1,35 @@
+# --- OS cruft (Windows / macOS) ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+.DS_Store
+._*
+
+# --- Editors / IDEs ---
+.vs/
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Logs and temp output ---
+*.log
+npm-debug.log*
+logs/
+tmp/
+temp/
+*.tmp
+*.bak
+
+# --- Local tooling that should never be published ---
+node_modules/
+.env
+.env.*
+!.env.example
+
+# NOTE: site/ and content/ are the project. Never ignore them.
+# site/ is what GitHub Pages serves; content/ is the source of truth for lessons.
