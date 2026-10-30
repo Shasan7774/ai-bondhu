@@ -760,6 +760,10 @@ main.hub{ max-width:none; margin:0; padding:0; }
 
 /* slim footer used on day pages / 404 */
 .site-footer--slim{ padding:1.4rem 0 1.5rem; }
+.foot-trust-mini{
+  font-size:.78rem; line-height:1.6; color:rgba(255,255,255,.8);
+  margin:0 auto .9rem; max-width:70ch;
+}
 .foot-slim{
   display:flex; flex-wrap:wrap; gap:.3rem 1.1rem; align-items:center;
   font-size:.85rem; color:rgba(255,255,255,.82);
