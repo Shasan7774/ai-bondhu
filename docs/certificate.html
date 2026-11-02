@@ -54,11 +54,25 @@
     border:1.5px solid var(--border-interactive); border-radius:var(--radius-sm);
     font-family:inherit; font-size:1rem; background:#fff; color:var(--ink);
   }
+  .cert-field input[aria-invalid="true"]{ border-color:var(--terracotta); }
+  .cert-name-error{
+    margin:.45rem 0 0; min-height:1.3em; font-size:.85rem; font-weight:600; color:var(--terracotta);
+  }
   .cert-progress-note{
     flex-basis:100%; margin:0; font-size:.85rem; color:var(--ink-soft);
   }
-  #cert-print-btn{ flex:0 0 auto; white-space:normal; }
+  .cert-actions{ display:flex; flex-wrap:wrap; gap:.7rem; flex:0 0 auto; }
+  #cert-download-btn,#cert-print-btn{ white-space:normal; }
+  .btn-secondary{
+    display:inline-flex; align-items:center; gap:.5rem; justify-content:center;
+    min-height:48px; padding:.7rem 1.5rem;
+    background:#fff; color:var(--teal-dark); border:1.5px solid var(--teal); border-radius:999px;
+    font-family:inherit; font-size:.98rem; font-weight:700; cursor:pointer;
+  }
+  .btn-secondary:hover:not(:disabled){ background:var(--teal-tint); }
+  .cert-tools button:disabled{ opacity:.5; cursor:not-allowed; }
   .cert-print-hint{ flex-basis:100%; margin:0; font-size:.8rem; color:var(--ink-soft); }
+  .cert-download-note{ flex-basis:100%; margin:.2rem 0 0; font-size:.82rem; color:var(--terracotta); font-weight:600; min-height:1.2em; }
 
   .cert-stage{ margin:0 0 1.6rem; }
   .cert-card{
@@ -156,10 +170,15 @@
   <section class="cert-tools" aria-label="সনদ তৈরি করুন">
     <div class="cert-field">
       <label for="cert-name-input">আপনার নাম লিখুন</label>
-      <input type="text" id="cert-name-input" autocomplete="name" placeholder="যেমন: রহিম উদ্দিন">
+      <input type="text" id="cert-name-input" autocomplete="name" placeholder="যেমন: রহিম উদ্দিন" maxlength="60" aria-describedby="cert-name-error" aria-invalid="false">
+      <p class="cert-name-error" id="cert-name-error" aria-live="polite"></p>
     </div>
-    <button type="button" id="cert-print-btn" class="btn-primary" onclick="window.print()">সনদটি প্রিন্ট করুন</button>
-    <p class="cert-print-hint">প্রিন্ট থেকে সরাসরি "Save as PDF" বেছে নিলে একটি PDF ফাইল হিসেবেও রাখতে পারবেন। অথবা ব্রাউজারের মেনু থেকে Print চাপুন (Ctrl+P)।</p>
+    <div class="cert-actions">
+      <button type="button" id="cert-download-btn" class="btn-primary" disabled>ছবি হিসেবে ডাউনলোড করুন</button>
+      <button type="button" id="cert-print-btn" class="btn-secondary" disabled>প্রিন্ট করুন / PDF বানান</button>
+    </div>
+    <p class="cert-print-hint">"ছবি হিসেবে ডাউনলোড করুন" সনদটিকে একটি PNG ছবি বানিয়ে সরাসরি আপনার ডিভাইসে রাখে — ফেসবুকে শেয়ার করার জন্য সুবিধাজনক। "প্রিন্ট করুন / PDF বানান" দিয়ে কাগজে প্রিন্ট করতে পারবেন, অথবা প্রিন্ট ডায়ালগ থেকে "Save as PDF" বেছে নিয়ে PDF ফাইল হিসেবেও রাখতে পারবেন। দুটো বোতামই নাম ঠিকভাবে লেখার পর চালু হবে।</p>
+    <p class="cert-download-note" id="cert-download-note" aria-live="polite"></p>
     <p class="cert-progress-note" id="cert-progress-note">আপনার অগ্রগতি দেখতে জাভাস্ক্রিপ্ট প্রয়োজন।</p>
   </section>
 
@@ -211,15 +230,15 @@
 </main>
 
 <footer class="site-footer site-footer--slim">
-  <p class="band-inner foot-trust-mini">এআই বন্ধু সম্পূর্ণ ফ্রি — কোনো টাকা বা সাইনআপ লাগে না, কেউ কখনো আপনার কাছে টাকা বা OTP চাইবে না, আর আপনার কোনো তথ্য সংগ্রহ বা বিক্রি করা হয় না। শুধু বেনামী ভিজিট সংখ্যা মাপা হয়।</p>
+  <p class="band-inner foot-trust-mini">এআই বন্ধু সম্পূর্ণ ফ্রি — কোনো টাকা বা সাইনআপ লাগে না, কেউ কখনো আপনার কাছে টাকা বা OTP চাইবে না, আর আপনার কোনো তথ্য সংগ্রহ বা বিক্রি করা হয় না। তৈরি করেছে Keystep Labs।</p>
   <nav class="band-inner foot-slim" aria-label="সাইটের অন্য অংশ">
     <a href="index.html">এআই বন্ধু</a><span class="foot-sep">·</span>
     <a href="aay.html">AI দিয়ে আয়</a><span class="foot-sep">·</span>
     <a href="tools.html">AI টুল গাইড</a><span class="foot-sep">·</span>
+    <a href="models.html">AI মডেল</a><span class="foot-sep">·</span>
     <a href="shobdokosh.html">শব্দকোষ</a><span class="foot-sep">·</span>
     <a href="prompt.html">প্রম্পট লাইব্রেরি</a><span class="foot-sep">·</span>
     <a href="pesha.html">পেশা অনুযায়ী AI</a><span class="foot-sep">·</span>
-    <a href="https://github.com/Shasan7774/ai-bondhu">GitHub</a>
   </nav>
 </footer>
 
@@ -261,36 +280,306 @@
     }
   } catch (e) {}
 
+  var todayBn = "";
   try {
-    var input = document.getElementById("cert-name-input");
-    var display = document.getElementById("cert-name-display");
-    var saved = get("aib_cert_name", "");
-    if (input && saved) { input.value = saved; }
-    function renderName() {
-      var v = input ? input.value.replace(/\s+/g, " ").trim() : "";
-      if (!display) return;
-      if (v) {
-        display.textContent = v;
+    var MONTHS = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+    var now = new Date();
+    var dateEl = document.getElementById("cert-date");
+    todayBn = bn(now.getDate()) + " " + MONTHS[now.getMonth()] + ", " + bn(now.getFullYear());
+    if (dateEl) dateEl.textContent = todayBn;
+  } catch (e) {}
+
+  /* ---------- name validation ---------- */
+  // Allowed: Bangla block (incl. nukta/matra/virama, copied verbatim -- never normalised),
+  // ZWJ/ZWNJ for conjuncts, English letters, spaces, and common name punctuation . - ' '.
+  var NAME_ALLOWED = /^[ঀ-৿‌‍a-zA-Z\s.\-'’]+$/;
+
+  function validateName(raw) {
+    var collapsed = (raw || "").replace(/\s+/g, " ").trim();
+    if (!collapsed) {
+      return { ok: false, value: "", message: "নামের জায়গাটা এখনও খালি — একটু নাম লিখে দিন, সাথে সাথে সনদে বসে যাবে।" };
+    }
+    if (collapsed.length < 2) {
+      return { ok: false, value: collapsed, message: "নামটা মনে হয় অসম্পূর্ণ রয়ে গেছে — আরেকটু লিখবেন কি? (কমপক্ষে ২ অক্ষর লাগবে)" };
+    }
+    if (collapsed.length > 60) {
+      return { ok: false, value: collapsed, message: "নামটা একটু লম্বা হয়ে যাচ্ছে — ৬০ অক্ষরের মধ্যে রাখলে সনদে সুন্দর দেখাবে।" };
+    }
+    if (!NAME_ALLOWED.test(collapsed)) {
+      return { ok: false, value: collapsed, message: "দুঃখিত, নামে শুধু বাংলা/ইংরেজি হরফ, স্পেস, আর . - ' চিহ্ন ব্যবহার করা যায় — অন্য চিহ্ন বাদ দিয়ে আবার লিখুন।" };
+    }
+    return { ok: true, value: collapsed, message: "" };
+  }
+
+  var input = document.getElementById("cert-name-input");
+  var display = document.getElementById("cert-name-display");
+  var errorEl = document.getElementById("cert-name-error");
+  var downloadBtn = document.getElementById("cert-download-btn");
+  var printBtn = document.getElementById("cert-print-btn");
+  var downloadNote = document.getElementById("cert-download-note");
+  var touched = false;
+  var currentValidName = null;
+
+  function renderState() {
+    var raw = input ? input.value : "";
+    var result = validateName(raw);
+
+    if (display) {
+      // SECURITY: always textContent, never innerHTML -- the name must never be parsed as markup.
+      if (result.ok) {
+        display.textContent = result.value;
         display.classList.remove("is-placeholder");
       } else {
         display.textContent = "আপনার নাম";
         display.classList.add("is-placeholder");
       }
     }
-    renderName();
+    if (errorEl) {
+      errorEl.textContent = (touched && !result.ok) ? result.message : "";
+    }
+    if (input) {
+      input.setAttribute("aria-invalid", result.ok ? "false" : "true");
+    }
+    if (downloadBtn) downloadBtn.disabled = !result.ok;
+    if (printBtn) printBtn.disabled = !result.ok;
+    currentValidName = result.ok ? result.value : null;
+  }
+
+  try {
+    var saved = get("aib_cert_name", "");
+    if (input && saved) { input.value = saved; }
+    renderState();
     if (input) {
       input.addEventListener("input", function () {
+        touched = true;
         set("aib_cert_name", input.value);
-        renderName();
+        renderState();
+      });
+      input.addEventListener("blur", function () {
+        touched = true;
+        renderState();
       });
     }
   } catch (e) {}
 
   try {
-    var MONTHS = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
-    var now = new Date();
-    var dateEl = document.getElementById("cert-date");
-    if (dateEl) dateEl.textContent = bn(now.getDate()) + " " + MONTHS[now.getMonth()] + ", " + bn(now.getFullYear());
+    if (printBtn) {
+      printBtn.addEventListener("click", function () {
+        if (!currentValidName) return;
+        window.print();
+      });
+    }
+  } catch (e) {}
+
+  /* ---------- download as PNG (Canvas API, no libraries) ---------- */
+  var FONT_STACK = '"Noto Sans Bengali","Kalpurush","SolaimanLipi","Nirmala UI",system-ui,sans-serif';
+
+  function fitLines(ctx, text, maxWidth, baseSize, minSize, weight) {
+    var size = baseSize;
+    ctx.font = weight + " " + size + "px " + FONT_STACK;
+    while (size > minSize && ctx.measureText(text).width > maxWidth) {
+      size -= 2;
+      ctx.font = weight + " " + size + "px " + FONT_STACK;
+    }
+    if (ctx.measureText(text).width <= maxWidth || text.indexOf(" ") === -1) {
+      return { lines: [text], size: size };
+    }
+    var words = text.split(" ");
+    var mid = Math.ceil(words.length / 2);
+    var line1 = words.slice(0, mid).join(" ");
+    var line2 = words.slice(mid).join(" ");
+    size = baseSize;
+    ctx.font = weight + " " + size + "px " + FONT_STACK;
+    while (size > minSize && (ctx.measureText(line1).width > maxWidth || ctx.measureText(line2).width > maxWidth)) {
+      size -= 2;
+      ctx.font = weight + " " + size + "px " + FONT_STACK;
+    }
+    return { lines: [line1, line2], size: size };
+  }
+
+  function drawSeal(ctx, cx, cy, r) {
+    ctx.save();
+    ctx.strokeStyle = "#0F6E6E";
+    ctx.lineWidth = r * 0.06;
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.globalAlpha = 0.65;
+    ctx.lineWidth = r * 0.025;
+    ctx.setLineDash([3, 9]);
+    ctx.beginPath(); ctx.arc(cx, cy, r * 0.8, 0, Math.PI * 2); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 1;
+
+    ctx.strokeStyle = "#2A2724";
+    ctx.lineWidth = r * 0.035;
+    ctx.beginPath(); ctx.arc(cx, cy, r * 0.62, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.strokeStyle = "#0F6E6E";
+    ctx.lineWidth = r * 0.1;
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.beginPath();
+    ctx.moveTo(cx - r * 0.33, cy + r * 0.02);
+    ctx.lineTo(cx - r * 0.1, cy + r * 0.22);
+    ctx.lineTo(cx + r * 0.32, cy - r * 0.28);
+    ctx.stroke();
+
+    ctx.strokeStyle = "#C25E3A";
+    ctx.lineWidth = r * 0.06;
+    ctx.lineJoin = "round";
+    ctx.beginPath();
+    ctx.moveTo(cx - r * 0.47, cy + r * 0.82);
+    ctx.lineTo(cx, cy + r * 0.52);
+    ctx.lineTo(cx + r * 0.47, cy + r * 0.82);
+    ctx.lineTo(cx + r * 0.3, cy + r * 1.6);
+    ctx.lineTo(cx, cy + r * 1.1);
+    ctx.lineTo(cx - r * 0.3, cy + r * 1.6);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawCertificate(name, dateText) {
+    var W = 1600, H = 1130;
+    var canvas = document.createElement("canvas");
+    canvas.width = W;
+    canvas.height = H;
+    var ctx = canvas.getContext("2d");
+    if (!ctx) { throw new Error("no-2d-context"); }
+
+    ctx.fillStyle = "#FBF8F4";
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(28, 28, W - 56, H - 56);
+
+    ctx.strokeStyle = "#0F6E6E";
+    ctx.lineWidth = 6;
+    ctx.strokeRect(28, 28, W - 56, H - 56);
+    ctx.strokeStyle = "#E3DACB";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(58, 58, W - 116, H - 116);
+
+    ctx.strokeStyle = "#0F6E6E";
+    ctx.lineWidth = 5;
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    var cl = 46, off = 46;
+    function corner(x, y, dx, dy) {
+      ctx.beginPath();
+      ctx.moveTo(x, y + cl * dy);
+      ctx.lineTo(x, y);
+      ctx.lineTo(x + cl * dx, y);
+      ctx.stroke();
+    }
+    corner(off, off, 1, 1);
+    corner(W - off, off, -1, 1);
+    corner(W - off, H - off, -1, -1);
+    corner(off, H - off, 1, -1);
+
+    ctx.textAlign = "center";
+
+    ctx.fillStyle = "#0B5454";
+    ctx.font = "700 34px " + FONT_STACK;
+    ctx.fillText("এআই বন্ধু", W / 2, 118);
+    ctx.fillStyle = "#5B564F";
+    ctx.font = "400 24px " + FONT_STACK;
+    ctx.fillText("দিনে ১০ মিনিট, সহজ বাংলায় AI শেখার ফ্রি কোর্স", W / 2, 154);
+
+    drawSeal(ctx, W / 2, 250, 72);
+
+    ctx.fillStyle = "#2A2724";
+    ctx.font = "700 52px " + FONT_STACK;
+    ctx.fillText("সনদপত্র", W / 2, 400);
+    ctx.fillStyle = "#5B564F";
+    ctx.font = "400 26px " + FONT_STACK;
+    ctx.fillText("এই মর্মে প্রত্যয়ন করা যাচ্ছে যে", W / 2, 440);
+
+    var nameFit = fitLines(ctx, name, W - 380, 64, 32, "700");
+    ctx.fillStyle = "#0B5454";
+    ctx.font = "700 " + nameFit.size + "px " + FONT_STACK;
+    var nameY = 510;
+    for (var i = 0; i < nameFit.lines.length; i++) {
+      ctx.fillText(nameFit.lines[i], W / 2, nameY + i * (nameFit.size + 14));
+    }
+    var underlineY = nameY + (nameFit.lines.length - 1) * (nameFit.size + 14) + 22;
+    ctx.strokeStyle = "#8C8475";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - 320, underlineY);
+    ctx.lineTo(W / 2 + 320, underlineY);
+    ctx.stroke();
+
+    var bodyY = underlineY + 60;
+    ctx.fillStyle = "#2A2724";
+    ctx.font = "400 28px " + FONT_STACK;
+    ctx.fillText("সফলভাবে সম্পন্ন করেছেন", W / 2, bodyY);
+    ctx.fillStyle = "#0B5454";
+    ctx.font = "700 30px " + FONT_STACK;
+    ctx.fillText("এআই বন্ধু — ৩০ দিনের AI কোর্স", W / 2, bodyY + 44);
+
+    ctx.strokeStyle = "#E3DACB";
+    ctx.setLineDash([8, 8]);
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(90, H - 150);
+    ctx.lineTo(W - 90, H - 150);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#5B564F";
+    ctx.font = "400 22px " + FONT_STACK;
+    ctx.fillText("তারিখ", 110, H - 108);
+    ctx.fillStyle = "#2A2724";
+    ctx.font = "700 26px " + FONT_STACK;
+    ctx.fillText(dateText, 110, H - 76);
+
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#5B564F";
+    ctx.font = "400 22px " + FONT_STACK;
+    ctx.fillText("এআই বন্ধু", W - 110, H - 108);
+    ctx.fillStyle = "#2A2724";
+    ctx.font = "700 26px " + FONT_STACK;
+    ctx.fillText("স্ব-ঘোষিত সনদ", W - 110, H - 76);
+
+    // Best-effort shaping sanity check: if the font stack produced no visible glyphs at all,
+    // treat this browser as unable to render Bangla on canvas and let the caller fall back.
+    ctx.font = "700 34px " + FONT_STACK;
+    if (!(ctx.measureText("এআই বন্ধু").width > 0)) {
+      throw new Error("text-shaping-unavailable");
+    }
+
+    return canvas;
+  }
+
+  function triggerPngDownload(canvas) {
+    var dataUrl = canvas.toDataURL("image/png");
+    if (!dataUrl || dataUrl === "data:," || dataUrl.length < 100) {
+      throw new Error("empty-image-data");
+    }
+    var a = document.createElement("a");
+    a.href = dataUrl;
+    a.download = "ai-bondhu-certificate.png";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  try {
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", function () {
+        if (downloadNote) downloadNote.textContent = "";
+        if (!currentValidName) return;
+        try {
+          var dEl = document.getElementById("cert-date");
+          var dateText = (dEl && dEl.textContent) ? dEl.textContent : todayBn;
+          var canvas = drawCertificate(currentValidName, dateText);
+          triggerPngDownload(canvas);
+        } catch (err) {
+          if (downloadNote) {
+            downloadNote.textContent = "দুঃখিত, এই ব্রাউজারে ছবি তৈরি করা গেল না। আপাতত “প্রিন্ট করুন / PDF বানান” অপশনটি ব্যবহার করুন।";
+          }
+        }
+      });
+    }
   } catch (e) {}
 })();
 </script>

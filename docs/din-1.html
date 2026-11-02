@@ -60,13 +60,18 @@
     <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
     সব পাঠের তালিকা
   </a>
-    <nav class="trail" aria-label="৩০ দিনের অগ্রগতি">
-      <p class="trail-label">আপনার যাত্রা</p>
-      <p class="trail-count" data-trail-count>৩০ দিনের পথ</p>
-      <div class="trail-track"></div>
-      <noscript>
-        <p><a href="din-1.html">১</a> · <a href="din-2.html">২</a> · <a href="din-3.html">৩</a> · <a href="din-4.html">৪</a> · <a href="din-5.html">৫</a> · <a href="din-6.html">৬</a> · <a href="din-7.html">৭</a> · <a href="din-8.html">৮</a> · <a href="din-9.html">৯</a> · <a href="din-10.html">১০</a> · <a href="din-11.html">১১</a> · <a href="din-12.html">১২</a> · <a href="din-13.html">১৩</a> · <a href="din-14.html">১৪</a> · <a href="din-15.html">১৫</a> · <a href="din-16.html">১৬</a> · <a href="din-17.html">১৭</a> · <a href="din-18.html">১৮</a> · <a href="din-19.html">১৯</a> · <a href="din-20.html">২০</a> · <a href="din-21.html">২১</a> · <a href="din-22.html">২২</a> · <a href="din-23.html">২৩</a> · <a href="din-24.html">২৪</a> · <a href="din-25.html">২৫</a> · <a href="din-26.html">২৬</a> · <a href="din-27.html">২৭</a> · <a href="din-28.html">২৮</a> · <a href="din-29.html">২৯</a> · <a href="din-30.html">৩০</a></p>
-      </noscript>
+    <nav class="week-nav" aria-label="এই সপ্তাহের দিনগুলো">
+      <p class="side-jump-title">এই সপ্তাহে</p>
+      <ul class="day-cards">
+        <li><a class="day-card" href="din-1.html" data-day-card="1" aria-current="page"><span class="dc-num">১</span><span class="dc-title">AI আসলে কী?</span></a></li>
+        <li><a class="day-card" href="din-2.html" data-day-card="2"><span class="dc-num">২</span><span class="dc-title">AI কী পারে, আর কী পারে না</span></a></li>
+        <li><a class="day-card" href="din-3.html" data-day-card="3"><span class="dc-num">৩</span><span class="dc-title">AI ভুল করে — কীভাবে বুঝবেন</span></a></li>
+        <li><a class="day-card" href="din-4.html" data-day-card="4"><span class="dc-num">৪</span><span class="dc-title">ভালো প্রশ্ন করার নিয়ম</span></a></li>
+        <li><a class="day-card" href="din-5.html" data-day-card="5"><span class="dc-num">৫</span><span class="dc-title">AI কি আপনার তথ্য নিয়ে নেয়?</span></a></li>
+        <li><a class="day-card" href="din-6.html" data-day-card="6"><span class="dc-num">৬</span><span class="dc-title">AI ব্যবহার করা কি অসততা?</span></a></li>
+        <li><a class="day-card" href="din-7.html" data-day-card="7"><span class="dc-num">৭</span><span class="dc-title">প্রথম সপ্তাহের রিভিউ</span></a></li>
+      </ul>
+      <a class="week-all-link" href="index.html#days">সব দিন দেখুন →</a>
     </nav>
   <nav class="side-jump" aria-label="এই পাঠের অংশ">
     <p class="side-jump-title">এই পাঠে</p>
@@ -138,7 +143,11 @@
 </defs>
 </svg>
 
-  <p class="day-label">দিন ১ / ৩০</p>
+  <div class="day-progress">
+    <p class="day-label">দিন ১ / ৩০</p>
+    <p class="day-week">সপ্তাহ ১</p>
+    <div class="day-progress-bar" aria-hidden="true"><span class="day-progress-fill" style="width:3.3%"></span></div>
+  </div>
   <h1>দিন ১: AI আসলে কী?</h1>
 
   <div class="hero-art">
@@ -154,6 +163,21 @@
       <path d="M108 106 L100 112 L109 118" fill="none" stroke="#0F6E6E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
+
+  <aside class="terms-box" aria-labelledby="h-terms">
+    <h2 id="h-terms">যে শব্দগুলো শুনবেন</h2>
+    <p class="terms-intro">কোর্স শুরুর আগে এই কয়েকটা শব্দের সাথে একটু পরিচিত হয়ে নিন — পরের পাঠগুলোতে এগুলো বারবার আসবে।</p>
+    <dl class="terms-list">
+      <div class="terms-item"><dt>AI</dt><dd>কম্পিউটার যখন মানুষের মতো প্রশ্নের উত্তর দেয় বা লেখা বোঝে, তখন তাকেই বলে AI।</dd></div>
+      <div class="terms-item"><dt>ChatGPT</dt><dd>OpenAI-এর তৈরি একটা জনপ্রিয় AI চ্যাট অ্যাপ।</dd></div>
+      <div class="terms-item"><dt>Gemini</dt><dd>Google-এর তৈরি AI অ্যাসিস্ট্যান্ট — জিমেইল থাকলেই শুরু করা যায়।</dd></div>
+      <div class="terms-item"><dt>Claude</dt><dd>Anthropic-এর তৈরি আরেকটা AI অ্যাসিস্ট্যান্ট।</dd></div>
+      <div class="terms-item"><dt>প্রম্পট</dt><dd>AI-কে আপনি যা লিখে পাঠান, সেটাই প্রম্পট।</dd></div>
+      <div class="terms-item"><dt>চ্যাটবট</dt><dd>লেখা বা কথায় উত্তর দিতে পারে, এমন একটা প্রোগ্রাম।</dd></div>
+      <div class="terms-item"><dt>অ্যাকাউন্ট</dt><dd>কোনো অ্যাপে নিজের একটা পরিচয় তৈরি করা, সাধারণত ইমেইল দিয়ে।</dd></div>
+    </dl>
+    <a class="terms-more" href="shobdokosh.html">পুরো শব্দকোষ দেখুন →</a>
+  </aside>
 
   <section class="card" aria-labelledby="h-today">
     <h2 id="h-today">আজকের কথা</h2>
@@ -349,16 +373,16 @@
 </div>
 
 <footer class="site-footer site-footer--slim">
-  <p class="band-inner foot-trust-mini">এআই বন্ধু সম্পূর্ণ ফ্রি — কোনো টাকা বা সাইনআপ লাগে না, কেউ কখনো আপনার কাছে টাকা বা OTP চাইবে না, আর আপনার কোনো তথ্য সংগ্রহ বা বিক্রি করা হয় না। শুধু বেনামী ভিজিট সংখ্যা মাপা হয়।</p>
+  <p class="band-inner foot-trust-mini">এআই বন্ধু সম্পূর্ণ ফ্রি — কোনো টাকা বা সাইনআপ লাগে না, কেউ কখনো আপনার কাছে টাকা বা OTP চাইবে না, আর আপনার কোনো তথ্য সংগ্রহ বা বিক্রি করা হয় না। তৈরি করেছে Keystep Labs।</p>
   <nav class="band-inner foot-slim" aria-label="সাইটের অন্য অংশ">
     <a href="index.html">এআই বন্ধু</a><span class="foot-sep">·</span>
     <a href="aay.html">AI দিয়ে আয়</a><span class="foot-sep">·</span>
     <a href="tools.html">AI টুল গাইড</a><span class="foot-sep">·</span>
+    <a href="models.html">AI মডেল</a><span class="foot-sep">·</span>
     <a href="shobdokosh.html">শব্দকোষ</a><span class="foot-sep">·</span>
     <a href="prompt.html">প্রম্পট লাইব্রেরি</a><span class="foot-sep">·</span>
     <a href="pesha.html">পেশা অনুযায়ী AI</a><span class="foot-sep">·</span>
     <a href="certificate.html">সার্টিফিকেট</a><span class="foot-sep">·</span>
-    <a href="https://github.com/Shasan7774/ai-bondhu">GitHub</a>
   </nav>
 </footer>
 

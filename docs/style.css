@@ -37,6 +37,13 @@ html.fs-2{ font-size:22px; }
 
 *,*::before,*::after{ box-sizing:border-box; }
 
+/* restore native [hidden] behaviour — without this, any element that also
+   carries its own `display` declaration (e.g. .btn-primary) ignores the
+   hidden attribute entirely, because an author-stylesheet rule always wins
+   over the user-agent stylesheet's [hidden]{display:none}, even at equal
+   specificity. Elements toggled via el.hidden must actually disappear. */
+[hidden]{ display:none !important; }
+
 body{
   margin:0;
   font-family:"Noto Sans Bengali","Kalpurush","SolaimanLipi","Nirmala UI",system-ui,sans-serif;
@@ -101,33 +108,45 @@ li{ margin-bottom:.5em; }
 }
 .font-ctrl button:hover{ border-color:var(--teal); color:var(--teal-dark); }
 
-/* ---------- progress trail ---------- */
-.trail{
-  max-width:var(--max-w); margin:0 auto; padding:0 var(--gutter) .9rem;
+/* ---------- day-page progress indicator (slim bar + label + week) ---------- */
+.trail-label{ font-size:.82rem; color:var(--ink-soft); margin:0 0 .3rem; } /* reused by index.html */
+
+.day-progress{ margin:0 0 .3rem; }
+.day-week{
+  font-size:.82rem; color:var(--ink-soft); font-weight:600; margin:0 0 .55rem;
 }
-.trail-track{
-  display:flex; gap:.3rem; overflow-x:auto; padding:.25rem .1rem .4rem;
-  scrollbar-width:thin;
+.day-progress-bar{
+  height:6px; border-radius:999px; background:#EFE8DC; border:1px solid var(--border);
+  overflow:hidden; margin:0 0 1rem; max-width:220px;
 }
-.trail-dot{
-  flex:0 0 auto;
-  width:32px; height:32px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:.72rem; font-weight:700;
-  border:1.5px solid var(--border-interactive); color:var(--ink-soft);
-  background:#fff; text-decoration:none;
+.day-progress-fill{ display:block; height:100%; width:0; background:var(--teal); border-radius:999px; }
+
+/* ---------- "this week" sidebar list (desktop day pages only) ---------- */
+.week-nav{ display:none; }
+.week-nav .day-cards{ grid-template-columns:1fr; gap:.4rem; margin:0 0 .9rem; }
+.week-all-link{
+  display:inline-flex; align-items:center; min-height:44px;
+  font-size:.82rem; font-weight:700; color:var(--teal-dark); text-decoration:none;
 }
-a.trail-dot:hover{ border-color:var(--teal); color:var(--teal-dark); }
-.trail-dot.is-complete{
-  background:var(--teal); border-color:var(--teal); color:#fff;
+.week-all-link:hover{ color:var(--teal); }
+
+/* ---------- Day 1: "যে শব্দগুলো শুনবেন" terms box ---------- */
+.terms-box{
+  background:var(--teal-tint); border:1px solid #cfe4e2; border-radius:var(--radius);
+  padding:1.2rem 1.3rem 1.3rem; margin:0 0 1.75rem;
 }
-.trail-dot.is-current{
-  border-color:var(--teal-dark); box-shadow:0 0 0 3px var(--teal-tint);
-  color:var(--teal-dark); font-weight:700;
+.terms-box h2{ color:var(--teal-dark); font-size:1.05rem; margin:0 0 .5rem; }
+.terms-intro{ color:var(--ink-soft); font-size:.9rem; margin:0 0 1.1rem; }
+.terms-list{ margin:0 0 1.1rem; display:grid; gap:.65rem; }
+.terms-item{ display:flex; flex-wrap:wrap; gap:.15rem .5rem; align-items:baseline; margin:0; }
+.terms-item dt{ font-weight:700; color:var(--ink); flex:0 0 auto; }
+.terms-item dd{ margin:0; color:var(--ink-soft); font-size:.92rem; flex:1 1 220px; }
+.terms-more{
+  display:inline-flex; align-items:center; min-height:48px;
+  font-weight:700; color:var(--teal-dark); text-decoration:none;
 }
-.td-t{ display:none; }
-.trail-label{ font-size:.82rem; color:var(--ink-soft); margin:0 0 .3rem; }
-.trail-count{ font-size:.78rem; color:var(--ink-soft); margin:.1rem 0 .4rem; font-weight:600; }
+.terms-more:hover{ color:var(--teal); }
+@media (min-width:700px){ .terms-list{ grid-template-columns:repeat(2,1fr); gap:.65rem 1.3rem; } }
 
 /* ---------- main layout blocks ---------- */
 main{ max-width:var(--max-w); margin:0 auto; padding:1.5rem var(--gutter) 1rem; }
@@ -368,36 +387,10 @@ strong{ color:var(--ink); }
   .day-side .font-ctrl{ display:flex; justify-content:flex-start; }
   .side-jump{ display:block; }
 
-  /* trail turns vertical inside the sidebar */
-  .day-side .trail{ max-width:none; margin:0; padding:0 0 .9rem; }
-  .day-side .trail-track{
-    display:flex; flex-direction:column; gap:.22rem;
-    overflow:visible; padding:.1rem 0 .2rem;
-  }
-  .day-side .trail-dot{
-    width:100%; height:auto; min-height:36px;
-    border-radius:8px; justify-content:flex-start; gap:.5rem;
-    padding:.3rem .5rem; font-size:.76rem; line-height:1.3;
-    background:#fff; border-color:var(--border); color:var(--ink-soft);
-  }
-  .day-side .td-n{
-    width:22px; height:22px; border-radius:50%; flex-shrink:0;
-    display:inline-flex; align-items:center; justify-content:center;
-    border:1.5px solid var(--border-interactive); font-size:.66rem;
-    font-variant-numeric:tabular-nums;
-  }
-  .day-side .td-t{
-    display:block; text-align:start; font-weight:600; font-size:.74rem;
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-  }
-  .day-side a.trail-dot:hover{ border-color:var(--teal); color:var(--teal-dark); background:var(--teal-tint); }
-  .day-side .trail-dot.is-complete{ background:var(--teal-tint); border-color:#cfe4e2; color:var(--teal-dark); }
-  .day-side .trail-dot.is-complete .td-n{ background:var(--teal); border-color:var(--teal); color:#fff; }
-  .day-side .trail-dot.is-current{
-    background:#fff; border-color:var(--teal-dark); box-shadow:0 0 0 2px var(--teal-tint);
-    color:var(--teal-dark);
-  }
-  .day-side .trail-dot.is-current .td-n{ background:var(--teal-dark); border-color:var(--teal-dark); color:#fff; }
+  /* the current-week day list only has room to make sense once the sidebar
+     is a true side column — on phone/tablet it stays hidden (minimal). */
+  .week-nav{ display:block; margin:0 0 1.3rem; }
+  .day-side .day-card{ min-height:48px; font-size:.78rem; padding:.5rem .6rem; }
 }
 
 @media (min-width:1320px){
@@ -887,3 +880,117 @@ main.hub{ max-width:none; margin:0; padding:0; }
   body.prompt-page .page-grid,
   body[data-pesha] .page-grid{ grid-template-columns:minmax(190px,.9fr) minmax(0,1fr); grid-template-areas:"side main"; }
 }
+
+/* ============================================================
+   index.html — "চতুর্থ বদল" narrative section (#shift)
+   four-era sequence · welcome + expectations cards · app grid
+   ============================================================ */
+.era-row{
+  display:grid; grid-template-columns:minmax(0,1fr); gap:.9rem;
+  list-style:none; margin:1.4rem 0 0; padding:0;
+}
+.era-step{
+  position:relative; display:flex; flex-direction:column; gap:.45rem; margin:0;
+  background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:1.15rem 1.1rem 1.25rem; overflow:hidden;
+}
+.era-step::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:4px; background:var(--border);
+}
+.era-step:nth-child(1)::before{ background:#D8CDBA; }
+.era-step:nth-child(2)::before{ background:#B3C9C4; }
+.era-step:nth-child(3)::before{ background:#4E9593; }
+.era-step:nth-child(4)::before{ background:var(--teal); }
+.era-step--now{ background:var(--teal-tint); border-color:#cfe4e2; }
+.era-ic{
+  width:48px; height:48px; border-radius:12px; flex-shrink:0;
+  background:var(--teal-tint); color:var(--teal-dark);
+  display:flex; align-items:center; justify-content:center; margin-bottom:.2rem;
+}
+.era-step--now .era-ic{ background:#fff; }
+.era-ic svg{ width:28px; height:28px; }
+.era-num{ font-size:.72rem; font-weight:700; letter-spacing:.05em; color:var(--ink-soft); }
+.era-step--now .era-num{ color:var(--teal-dark); }
+.era-step h3{ margin:0; font-size:1.02rem; }
+.era-when{ margin:0; font-size:.78rem; font-weight:600; color:var(--teal-dark); }
+.era-step p:last-child{ margin:0; font-size:.88rem; color:var(--ink-soft); line-height:1.65; }
+.era-note{
+  margin:1.2rem 0 0; max-width:70ch; font-weight:600;
+}
+@media (min-width:700px){ .era-row{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; } }
+@media (min-width:1100px){ .era-row{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; } }
+
+.shift-sub{ margin:2.2rem 0 0; }
+.shift-sub h3{ font-size:1.12rem; margin:0 0 .6rem; }
+.shift-sub p{ max-width:70ch; }
+.shift-close{ font-weight:600; }
+
+.reach-chips{
+  display:flex; flex-wrap:wrap; gap:.45rem; list-style:none; margin:1rem 0 1.1rem; padding:0;
+}
+.reach-chips li{
+  margin:0; font-size:.85rem; font-weight:600; color:var(--teal-dark);
+  background:var(--teal-tint); border:1px solid #cfe4e2; border-radius:999px;
+  padding:.26rem .85rem;
+}
+
+.start-grid{ display:grid; grid-template-columns:minmax(0,1fr); gap:1rem; margin:2rem 0 0; }
+.start-card{
+  background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:1.3rem 1.25rem 1.4rem;
+}
+.start-card--warm{
+  background:linear-gradient(180deg,var(--terracotta-tint) 0%, var(--card-bg) 60%);
+  border-color:#e9c9b6; border-inline-start:4px solid var(--terracotta);
+}
+.start-head{ display:flex; align-items:center; gap:.7rem; margin:0 0 .85rem; }
+.start-head h3{ margin:0; font-size:1.1rem; }
+.start-ic{
+  width:44px; height:44px; border-radius:50%; flex-shrink:0;
+  background:#fff; border:1px solid var(--border); color:var(--teal-dark);
+  display:flex; align-items:center; justify-content:center;
+}
+.start-card--warm .start-ic{ border-color:#e9c9b6; color:#9a4a2c; }
+.start-ic svg{ width:25px; height:25px; }
+.start-card p:last-child{ margin-bottom:0; }
+.ready-list{ list-style:none; display:grid; gap:.55rem; margin:0 0 .9rem; padding:0; }
+.ready-list li{ display:flex; gap:.6rem; align-items:flex-start; margin:0; font-size:.92rem; line-height:1.6; }
+.ready-list svg{ width:20px; height:20px; flex-shrink:0; margin-top:.25rem; color:var(--teal); }
+.ready-note{
+  margin:0; font-size:.86rem; color:var(--ink-soft);
+  padding-top:.85rem; border-top:1px dashed var(--border);
+}
+@media (min-width:700px){ .ready-list{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:.6rem .9rem; } }
+@media (min-width:860px){
+  .start-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:1.3rem; align-items:start; }
+}
+
+.app-grid{
+  display:grid; grid-template-columns:minmax(0,1fr); gap:.9rem;
+  list-style:none; margin:1.2rem 0 0; padding:0;
+}
+.app-grid li{ margin:0; display:flex; }
+.app-card{
+  display:flex; gap:.85rem; align-items:flex-start; width:100%;
+  background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:1rem 1.05rem 1.1rem;
+}
+.app-ic{
+  width:44px; height:44px; border-radius:12px; flex-shrink:0;
+  background:var(--teal-tint); color:var(--teal-dark);
+  display:flex; align-items:center; justify-content:center;
+}
+.app-ic svg{ width:25px; height:25px; }
+.app-card h4{ margin:0 0 .25rem; font-size:1rem; font-weight:700; line-height:1.4; color:var(--ink); }
+.app-card p{ margin:0; font-size:.86rem; color:var(--ink-soft); line-height:1.6; }
+@media (min-width:700px){ .app-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; } }
+
+.app-more{
+  display:inline-flex; align-items:center; gap:.55rem; margin:1.2rem 0 0;
+  min-height:48px; padding:.6rem 1.2rem; background:#fff;
+  border:1.5px solid var(--teal); border-radius:999px;
+  font-weight:700; font-size:.95rem; color:var(--teal-dark); text-decoration:none;
+}
+.app-more:hover{ background:var(--teal-tint); color:var(--teal-dark); }
+.app-more .icon{ width:17px; height:17px; flex-shrink:0; }
+.app-note{ margin-top:1.2rem; max-width:70ch; }

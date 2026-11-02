@@ -13,19 +13,6 @@
     return String(num).replace(/\d/g, function (d) { return BN[+d]; });
   }
 
-  /* short title of each day — used for the sidebar trail labels */
-  var DAYS = [
-    "AI আসলে কী?", "AI কী পারে, আর কী পারে না", "AI ভুল করে — কীভাবে বুঝবেন",
-    "ভালো প্রশ্ন করার নিয়ম", "AI কি আপনার তথ্য নিয়ে নেয়?", "AI ব্যবহার করা কি অসততা?",
-    "প্রথম সপ্তাহের রিভিউ", "দৈনন্দিন কাজে AI", "লেখার কাজে AI", "ভাষার দেয়াল",
-    "ছবি দিয়ে প্রশ্ন করা", "ভয়েসে কথা বলা", "কাগজপত্র বোঝা", "দ্বিতীয় সপ্তাহের রিভিউ",
-    "নতুন কিছু শেখা", "অন্যকে শেখানো", "প্রথম প্রজেক্ট", "সৃজনশীল কাজ", "ছবি বানানো",
-    "AI-এর উত্তর যাচাই করা", "তৃতীয় সপ্তাহের রিভিউ", "AI দিয়ে প্রতারণা",
-    "ডিপফেক ও ভুয়া ছবি-ভিডিও", "চারপাশের মানুষের নিরাপত্তা", "কাজের জায়গায় AI",
-    "ভবিষ্যতের দক্ষতা", "AI-এর সীমা ও নৈতিকতা", "নিজের একটা অভ্যাস তৈরি",
-    "চতুর্থ সপ্তাহের রিভিউ", "আপনি এখন কী পারেন"
-  ];
-
   function doneDays() {
     var d = get("aib_done", []);
     if (!d || typeof d.length !== "number") return [];
@@ -124,27 +111,24 @@
     });
   });
 
-  /* ৩০ দিনের progress trail */
   var done = doneDays();
-  var tracks = document.querySelectorAll(".trail-track");
-  if (tracks.length) {
-    var curDay = parseInt(document.body.getAttribute("data-day") || "0", 10);
-    var html = "";
-    for (var n = 1; n <= 30; n++) {
-      var isDone = done.indexOf(n) !== -1;
-      var cls = "trail-dot" + (isDone ? " is-complete" : "") + (n === curDay ? " is-current" : "");
-      var label = "দিন " + bn(n) + ": " + DAYS[n - 1] + (isDone ? " — সম্পূর্ণ" : "");
-      html += '<a href="din-' + n + '.html" class="' + cls + '" aria-label="' + label + '"'
-        + (n === curDay ? ' aria-current="page"' : "")
-        + '><span class="td-n">' + bn(n) + '</span><span class="td-t">' + DAYS[n - 1] + "</span></a>";
-    }
-    tracks.forEach(function (t) { t.innerHTML = html; });
-  }
 
-  /* sidebar progress line on day pages */
-  document.querySelectorAll("[data-trail-count]").forEach(function (el) {
-    el.textContent = "৩০ দিনের মধ্যে " + bn(done.length) + " দিন সম্পূর্ণ";
-  });
+  /* completed-day marks: used by the homepage's full 30-day grid AND the
+     day pages' "this week" sidebar list — both use [data-day-card]. Kept as
+     a named function (not a one-shot forEach) so it can be re-run the
+     instant a day is marked complete, instead of only on next page load. */
+  function markDoneCards() {
+    document.querySelectorAll("[data-day-card]").forEach(function (a) {
+      var n = parseInt(a.getAttribute("data-day-card"), 10);
+      if (done.indexOf(n) === -1 || a.classList.contains("is-done")) return;
+      a.classList.add("is-done");
+      var s = document.createElement("span");
+      s.className = "sr-only";
+      s.textContent = " — সম্পূর্ণ";
+      a.appendChild(s);
+    });
+  }
+  markDoneCards();
 
   /* দিন সম্পূর্ণ button */
   var completeBtn = document.querySelector("[data-day-complete]");
@@ -157,20 +141,11 @@
       var d = get("aib_done", []);
       if (!d || typeof d.length !== "number") d = [];
       if (d.indexOf(day) === -1) { d.push(day); set("aib_done", d); }
+      done = d;
       showDone();
+      markDoneCards();
     });
   }
-
-  /* ---------- homepage: completed day cards + progress dashboard ---------- */
-  document.querySelectorAll("[data-day-card]").forEach(function (a) {
-    var n = parseInt(a.getAttribute("data-day-card"), 10);
-    if (done.indexOf(n) === -1) return;
-    a.classList.add("is-done");
-    var s = document.createElement("span");
-    s.className = "sr-only";
-    s.textContent = " — সম্পূর্ণ";
-    a.appendChild(s);
-  });
 
   var fill = document.querySelector("[data-prog-fill]");
   if (fill) {
