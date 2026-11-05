@@ -182,3 +182,34 @@
     }
   }
 })();
+
+/* ---------- top menu: close siblings, outside click, Escape ----------
+   Progressive enhancement only. With JS off the <details> menus still
+   open and close natively; this just stops two being open at once. */
+(function () {
+  var nav = document.querySelector('.main-nav');
+  if (!nav) return;
+  var items = Array.prototype.slice.call(nav.querySelectorAll('.nav-item'));
+  if (!items.length) return;
+
+  function closeAll(except) {
+    items.forEach(function (d) { if (d !== except) d.open = false; });
+  }
+
+  items.forEach(function (d) {
+    d.addEventListener('toggle', function () { if (d.open) closeAll(d); });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!nav.contains(e.target)) closeAll(null);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var open = items.filter(function (d) { return d.open; });
+    if (!open.length) return;
+    closeAll(null);
+    var s = open[0].querySelector('summary');
+    if (s) s.focus();
+  });
+})();

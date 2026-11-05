@@ -1038,3 +1038,62 @@ main.hub{ max-width:none; margin:0; padding:0; }
   background:var(--teal-tint); border:1px solid #cfe4e2; border-radius:999px;
   padding:.26rem .85rem;
 }
+
+/* ============================================================
+   top navigation — grouped menu (কোর্স · মডিউল · আরও)
+   native <details>/<summary>: works with JS disabled
+   ============================================================ */
+.header-row{ flex-wrap:wrap; }
+
+.main-nav{
+  order:3; flex-basis:100%; position:relative;
+  display:flex; gap:.4rem; margin-top:.2rem;
+}
+.nav-item{ flex:1 1 0; min-width:0; }
+
+.nav-item > summary{
+  list-style:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:.35rem;
+  min-height:44px; padding:.35rem .55rem;
+  font-size:.92rem; font-weight:700; color:var(--ink);
+  background:var(--card-bg); border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+}
+.nav-item > summary::-webkit-details-marker{ display:none; }
+.nav-item > summary::after{
+  content:""; flex:none; width:.42em; height:.42em;
+  border-right:2px solid var(--ink-soft); border-bottom:2px solid var(--ink-soft);
+  transform:rotate(45deg); margin-top:-.22em;
+}
+.nav-item > summary:hover{ border-color:var(--teal); color:var(--teal-dark); }
+.nav-item > summary:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+.nav-item[open] > summary{
+  background:var(--teal-tint); border-color:var(--teal); color:var(--teal-dark);
+}
+.nav-item[open] > summary::after{
+  transform:rotate(-135deg); margin-top:.16em;
+  border-color:var(--teal-dark);
+}
+
+.nav-item > ul{
+  position:absolute; z-index:60; top:100%; inset-inline:0; margin:.35rem 0 0;
+  list-style:none; padding:.3rem;
+  background:var(--card-bg); border:1px solid var(--border);
+  border-radius:var(--radius); box-shadow:var(--shadow);
+}
+.nav-item > ul li{ margin:0; }
+.nav-item > ul a{
+  display:flex; align-items:center; min-height:44px;
+  padding:.5rem .7rem; border-radius:var(--radius-sm);
+  font-size:.92rem; line-height:1.5; color:var(--ink); text-decoration:none;
+}
+.nav-item > ul a:hover,
+.nav-item > ul a:focus-visible{ background:var(--teal-tint); color:var(--teal-dark); }
+
+@media (min-width:700px){
+  .main-nav{ order:2; flex-basis:auto; margin:0 0 0 auto; }
+  .font-ctrl{ order:3; margin-inline-start:.6rem; }
+  .nav-item{ flex:none; position:relative; }
+  .nav-item > ul{ inset-inline:auto; inset-inline-start:0; min-width:235px; }
+  .nav-item:last-child > ul{ inset-inline-start:auto; inset-inline-end:0; }
+}
