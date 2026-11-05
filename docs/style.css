@@ -548,25 +548,23 @@ strong{ color:var(--ink); }
    ============================================================ */
 main.hub{ max-width:none; margin:0; padding:0; }
 
-.band{ padding:2.3rem 0; }
+/* generous vertical rhythm — the landing page earns its calm from the space
+   between ideas, not from boxes around them */
+.band{ padding:3.4rem 0; }
 .band-inner{ max-width:var(--shell); margin:0 auto; padding:0 var(--gutter); }
 .band--tint{ background:var(--teal-tint); }
 .band--paper{ background:#fff; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
 .band.faq{ margin:0; }
-.band--deep{ background:var(--teal-dark); color:#fff; }
-.band--deep h2,.band--deep h3{ color:#fff; }
-.band--deep a{ color:#fff; }
 
 .band-head{ margin:0 0 1.2rem; }
 .band-head h2{ margin:0 0 .35rem; font-size:1.3rem; }
 .band-lede{ color:var(--ink-soft); margin:0; max-width:62ch; }
-.band--deep .band-lede{ color:rgba(255,255,255,.85); }
 
 /* hero band */
 .hero-band{
   background:linear-gradient(180deg,#F3EFE7 0%, var(--bg) 100%);
   border-bottom:1px solid var(--border);
-  padding:1.6rem 0 2.2rem;
+  padding:2rem 0 3rem;
 }
 .hero-grid{ display:grid; gap:1.2rem; align-items:center; }
 .hero-copy{ text-align:center; }
@@ -578,11 +576,12 @@ main.hub{ max-width:none; margin:0; padding:0; }
 .hero-copy .headline{ font-size:1.65rem; margin:0 0 .6rem; }
 .hero-copy .subheadline{ margin:0 0 1.3rem; }
 .hero-actions{ display:flex; flex-wrap:wrap; gap:.7rem; justify-content:center; }
+.hero-note{ margin:1.1rem 0 0; font-size:.9rem; color:var(--ink-soft); }
 .hero-figure{ margin:0; }
 .hero-figure svg{ width:100%; max-width:380px; height:auto; margin:0 auto; }
 
 @media (min-width:860px){
-  .hero-band{ padding:2.6rem 0 3rem; }
+  .hero-band{ padding:3.2rem 0 4.2rem; }
   .hero-grid{ grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:2.4rem; }
   .hero-copy{ text-align:start; }
   .hero-copy .headline{ font-size:2.05rem; }
@@ -591,24 +590,36 @@ main.hub{ max-width:none; margin:0; padding:0; }
   .hero-figure svg{ max-width:440px; }
 }
 
-/* stats band */
-.stats-band{ padding:1.4rem 0; }
-.stats-grid{
-  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.9rem 1rem;
-  list-style:none; margin:0; padding:0;
+/* index: the quiet "why" — a slim era sequence, then two sentences.
+   The full four-era telling lives on course.html. */
+.why-inner > h2{ font-size:1.35rem; margin:0 0 .45rem; }
+.why-inner > p{ max-width:62ch; }
+.why-inner > p:last-child{ margin-bottom:0; }
+.era-line{
+  display:flex; flex-wrap:wrap; align-items:center; gap:.6rem 1rem;
+  list-style:none; margin:1.7rem 0 1.9rem; padding:0;
 }
-.stats-grid li{
-  display:flex; align-items:center; gap:.6rem; margin:0;
-  font-size:.92rem; font-weight:600; line-height:1.4;
+.era-line li{
+  display:flex; align-items:center; gap:.5rem; margin:0;
+  font-size:.92rem; font-weight:600; color:var(--ink-soft);
 }
-.stat-ic{
-  width:34px; height:34px; flex-shrink:0; border-radius:50%;
-  background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.3);
-  display:flex; align-items:center; justify-content:center;
+.era-line li + li::before{
+  content:""; flex:0 0 auto; width:20px; height:1px;
+  background:var(--border); margin-inline-end:.4rem;
 }
-.stat-ic svg{ width:18px; height:18px; color:#fff; }
-@media (min-width:700px){ .stats-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
-@media (min-width:1100px){ .stats-grid{ grid-template-columns:repeat(5,minmax(0,1fr)); } }
+.era-line svg{ width:26px; height:26px; opacity:.7; }
+.era-line .is-now{ color:var(--teal-dark); }
+.era-line .is-now svg{ opacity:1; }
+.era-now{
+  font-size:.7rem; font-weight:700; letter-spacing:.05em;
+  background:var(--teal-tint); border:1px solid #cfe4e2; border-radius:999px;
+  padding:.1rem .6rem;
+}
+
+/* index: trust — plain text on the page, one hairline above it */
+.trust-band{ border-top:1px solid var(--border); }
+.trust-inner > h2{ font-size:1.2rem; margin:0 0 .5rem; }
+.trust-inner > p{ margin:0; max-width:72ch; color:var(--ink-soft); }
 
 /* module grid */
 .module-grid{
@@ -674,8 +685,9 @@ main.hub{ max-width:none; margin:0; padding:0; }
   .prog-grid{ grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:1.6rem; }
 }
 
-/* 30-day week grid */
-.week-block{ margin:1.6rem 0 0; }
+/* 30-day week grid (course.html) — one calm column of four week blocks */
+.week-block{ margin:0 0 2.4rem; }
+.week-block:last-child{ margin-bottom:0; }
 .week-head{
   display:flex; flex-wrap:wrap; align-items:baseline; gap:.2rem .7rem;
   margin:0 0 .7rem; padding-bottom:.45rem; border-bottom:1px solid var(--border);
@@ -706,10 +718,6 @@ main.hub{ max-width:none; margin:0; padding:0; }
 .day-card.is-done .dc-num{ background:var(--teal); border-color:var(--teal); color:#fff; }
 .day-card.is-done .dc-title::after{ content:" \2713"; color:var(--teal-dark); font-weight:700; }
 @media (min-width:700px){ .day-cards{ grid-template-columns:repeat(3,minmax(0,1fr)); gap:.6rem; } }
-@media (min-width:1100px){
-  .week-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.6rem 2rem; }
-  .week-block{ margin-top:0; }
-}
 
 /* FAQ at wide widths */
 @media (min-width:1100px){
@@ -777,7 +785,6 @@ main.hub{ max-width:none; margin:0; padding:0; }
   /* keep the day illustrations from ballooning in a wide column */
   .hero-art svg{ max-width:520px; margin-inline:auto; }
   .concept-diagram svg{ max-width:620px; margin-inline:auto; }
-  .prog-grid .day-structure{ grid-template-columns:repeat(auto-fit,minmax(165px,1fr)); }
 }
 
 @media (min-width:1100px){
@@ -785,7 +792,7 @@ main.hub{ max-width:none; margin:0; padding:0; }
   .header-row{ max-width:var(--shell); padding-inline:1.5rem; }
   .audience-grid{ grid-template-columns:repeat(6,minmax(0,1fr)); }
   .benefit-list{ grid-template-columns:repeat(3,minmax(0,1fr)); }
-  .band{ padding:3rem 0; }
+  .band{ padding:4.8rem 0; }
   .band-inner{ padding:0 1.5rem; }
   .band-head h2{ font-size:1.45rem; }
 }
@@ -882,59 +889,43 @@ main.hub{ max-width:none; margin:0; padding:0; }
 }
 
 /* ============================================================
-   index.html — "চতুর্থ বদল" narrative section (#shift)
-   four-era sequence · welcome + expectations cards · app grid
+   course.html — ৩০ দিনের যাত্রা
+   one idea per section, real space between them, cards only where earned
    ============================================================ */
-.era-row{
-  display:grid; grid-template-columns:minmax(0,1fr); gap:.9rem;
-  list-style:none; margin:1.4rem 0 0; padding:0;
-}
-.era-step{
-  position:relative; display:flex; flex-direction:column; gap:.45rem; margin:0;
-  background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
-  box-shadow:var(--shadow); padding:1.15rem 1.1rem 1.25rem; overflow:hidden;
-}
-.era-step::before{
-  content:""; position:absolute; inset:0 0 auto 0; height:4px; background:var(--border);
-}
-.era-step:nth-child(1)::before{ background:#D8CDBA; }
-.era-step:nth-child(2)::before{ background:#B3C9C4; }
-.era-step:nth-child(3)::before{ background:#4E9593; }
-.era-step:nth-child(4)::before{ background:var(--teal); }
-.era-step--now{ background:var(--teal-tint); border-color:#cfe4e2; }
-.era-ic{
-  width:48px; height:48px; border-radius:12px; flex-shrink:0;
-  background:var(--teal-tint); color:var(--teal-dark);
-  display:flex; align-items:center; justify-content:center; margin-bottom:.2rem;
-}
-.era-step--now .era-ic{ background:#fff; }
-.era-ic svg{ width:28px; height:28px; }
-.era-num{ font-size:.72rem; font-weight:700; letter-spacing:.05em; color:var(--ink-soft); }
-.era-step--now .era-num{ color:var(--teal-dark); }
-.era-step h3{ margin:0; font-size:1.02rem; }
-.era-when{ margin:0; font-size:.78rem; font-weight:600; color:var(--teal-dark); }
-.era-step p:last-child{ margin:0; font-size:.88rem; color:var(--ink-soft); line-height:1.65; }
-.era-note{
-  margin:1.2rem 0 0; max-width:70ch; font-weight:600;
-}
-@media (min-width:700px){ .era-row{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; } }
-@media (min-width:1100px){ .era-row{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; } }
+.course-sec{ margin:0 0 3.4rem; }
+.course-sec:last-child{ margin-bottom:1.5rem; }
+.course-sec > h2{ font-size:1.3rem; margin:0 0 .5rem; }
+.course-sec > h3{ font-size:1.12rem; margin:2.2rem 0 .6rem; }
+.course-sec > p{ max-width:70ch; }
+.sec-lede{ color:var(--ink-soft); margin:0 0 1.3rem; max-width:62ch; }
 
-.shift-sub{ margin:2.2rem 0 0; }
-.shift-sub h3{ font-size:1.12rem; margin:0 0 .6rem; }
-.shift-sub p{ max-width:70ch; }
+.meta-line{
+  display:flex; flex-wrap:wrap; gap:.1rem .5rem; list-style:none;
+  margin:0; padding:0; font-size:.88rem; font-weight:600; color:var(--ink-soft);
+}
+.meta-line li{ margin:0; }
+.meta-line li:not(:last-child)::after{ content:"\00B7"; margin-inline-start:.5rem; opacity:.45; }
+
+/* the four eras, told as plain text on the page — no cards */
+.era-list{ display:grid; gap:1.9rem; list-style:none; margin:1.5rem 0 1.6rem; padding:0; }
+.era-list li{
+  margin:0; padding-inline-start:1.1rem;
+  border-inline-start:2px solid var(--border);
+}
+.era-list li:last-child{ border-inline-start-color:var(--teal); }
+.era-kicker{
+  margin:0 0 .15rem; font-size:.78rem; font-weight:700; letter-spacing:.04em;
+  color:var(--ink-soft);
+}
+.era-list h3{ margin:0 0 .3rem; font-size:1.05rem; }
+.era-list p:last-child{ margin:0; max-width:70ch; color:var(--ink-soft); }
+.era-note{ margin:0 0 .4rem; max-width:70ch; font-weight:600; }
+
+.course-cta{ text-align:center; }
+
 .shift-close{ font-weight:600; }
 
-.reach-chips{
-  display:flex; flex-wrap:wrap; gap:.45rem; list-style:none; margin:1rem 0 1.1rem; padding:0;
-}
-.reach-chips li{
-  margin:0; font-size:.85rem; font-weight:600; color:var(--teal-dark);
-  background:var(--teal-tint); border:1px solid #cfe4e2; border-radius:999px;
-  padding:.26rem .85rem;
-}
-
-.start-grid{ display:grid; grid-template-columns:minmax(0,1fr); gap:1rem; margin:2rem 0 0; }
+.start-grid{ display:grid; grid-template-columns:minmax(0,1fr); gap:1rem; margin:0; }
 .start-card{
   background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
   box-shadow:var(--shadow); padding:1.3rem 1.25rem 1.4rem;
