@@ -985,3 +985,56 @@ main.hub{ max-width:none; margin:0; padding:0; }
 .app-more:hover{ background:var(--teal-tint); color:var(--teal-dark); }
 .app-more .icon{ width:17px; height:17px; flex-shrink:0; }
 .app-note{ margin-top:1.2rem; max-width:70ch; }
+
+/* ============================================================
+   index.html — "চতুর্থ বদল" narrative section (#shift)
+   four-era sequence · welcome + expectations cards · app grid
+   ============================================================ */
+.era-row{
+  display:grid; grid-template-columns:minmax(0,1fr); gap:.9rem;
+  list-style:none; margin:1.4rem 0 0; padding:0;
+}
+.era-step{
+  position:relative; display:flex; flex-direction:column; gap:.45rem; margin:0;
+  background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:1.15rem 1.1rem 1.25rem; overflow:hidden;
+}
+.era-step::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:4px; background:var(--border);
+}
+.era-step:nth-child(1)::before{ background:#D8CDBA; }
+.era-step:nth-child(2)::before{ background:#B3C9C4; }
+.era-step:nth-child(3)::before{ background:#4E9593; }
+.era-step:nth-child(4)::before{ background:var(--teal); }
+.era-step--now{ background:var(--teal-tint); border-color:#cfe4e2; }
+.era-ic{
+  width:48px; height:48px; border-radius:12px; flex-shrink:0;
+  background:var(--teal-tint); color:var(--teal-dark);
+  display:flex; align-items:center; justify-content:center; margin-bottom:.2rem;
+}
+.era-step--now .era-ic{ background:#fff; }
+.era-ic svg{ width:28px; height:28px; }
+.era-num{ font-size:.72rem; font-weight:700; letter-spacing:.05em; color:var(--ink-soft); }
+.era-step--now .era-num{ color:var(--teal-dark); }
+.era-step h3{ margin:0; font-size:1.02rem; }
+.era-when{ margin:0; font-size:.78rem; font-weight:600; color:var(--teal-dark); }
+.era-step p:last-child{ margin:0; font-size:.88rem; color:var(--ink-soft); line-height:1.65; }
+.era-note{
+  margin:1.2rem 0 0; max-width:70ch; font-weight:600;
+}
+@media (min-width:700px){ .era-row{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; } }
+@media (min-width:1100px){ .era-row{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; } }
+
+.shift-sub{ margin:2.2rem 0 0; }
+.shift-sub h3{ font-size:1.12rem; margin:0 0 .6rem; }
+.shift-sub p{ max-width:70ch; }
+.shift-close{ font-weight:600; }
+
+.reach-chips{
+  display:flex; flex-wrap:wrap; gap:.45rem; list-style:none; margin:1rem 0 1.1rem; padding:0;
+}
+.reach-chips li{
+  margin:0; font-size:.85rem; font-weight:600; color:var(--teal-dark);
+  background:var(--teal-tint); border:1px solid #cfe4e2; border-radius:999px;
+  padding:.26rem .85rem;
+}
