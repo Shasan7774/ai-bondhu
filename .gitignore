@@ -33,3 +33,5 @@ node_modules/
 
 # NOTE: site/ and content/ are the project. Never ignore them.
 # site/ is what GitHub Pages serves; content/ is the source of truth for lessons.
+.playwright-mcp/
+qa/

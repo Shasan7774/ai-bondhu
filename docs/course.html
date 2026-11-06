@@ -482,7 +482,7 @@
     <div class="prog-grid">
       <div class="prog-card">
         <p class="prog-count"><span data-prog-done>০</span> <span class="prog-total">/ ৩০ দিন সম্পূর্ণ</span></p>
-        <p class="prog-sub" data-prog-sub>শুরু করতে নিচের বোতামে চাপ দিন।</p>
+        <p class="prog-sub" data-prog-sub>দিন ১ দিয়ে শুরু করুন — নিচের বোতামে চাপ দিন।</p>
         <div class="prog-bar" role="img" aria-label="অগ্রগতি: ৩০ দিনের মধ্যে ০ দিন সম্পূর্ণ" data-prog-bar>
           <span class="prog-fill" data-prog-fill></span>
         </div>
@@ -526,24 +526,12 @@
 </footer>
 
 <script>
-/* Show the progress panel only when at least one day is already complete —
-   a first-time visitor must never meet an empty 0/30 widget. The section is
-   `hidden` in the markup, so it also stays hidden with JavaScript off. */
+/* Show the progress panel whenever JavaScript runs, including at 0/30, so the menu's
+   "আপনার অগ্রগতি" link always lands on something (owner decision 2026-11-06). The
+   section is `hidden` in the markup, so it stays hidden with JavaScript off. */
 (function () {
-  try {
-    var raw = localStorage.getItem("aib_done");
-    if (!raw) return;
-    var d = JSON.parse(raw);
-    if (!d || typeof d.length !== "number") return;
-    var n = 0;
-    for (var i = 0; i < d.length; i++) {
-      var v = parseInt(d[i], 10);
-      if (v >= 1 && v <= 30) n++;
-    }
-    if (n < 1) return;
-    var el = document.getElementById("progress");
-    if (el) el.hidden = false;
-  } catch (e) {}
+  var el = document.getElementById("progress");
+  if (el) el.hidden = false;
 })();
 </script>
 <script src="script.js"></script>

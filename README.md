@@ -61,10 +61,10 @@ These are not preferences. Breaking one of them breaks the product for its actua
   adds conveniences: font-size control, copy-to-clipboard, step checkboxes, the quiz, and
   progress tracking. With JS off, a `<noscript>` block still lists all 30 days as links.
 - **No backend, no accounts, no cookies.** Progress lives in the reader's own browser via
-  `localStorage` (keys `aib_font`, `aib_steps`, `aib_done`). Nothing is collected, nothing is
+  `localStorage` (keys `aib_font`, `aib_steps`, `aib_done`, `aib_cert_name`). Nothing is collected, nothing is
   sent anywhere. Clearing browser data simply resets progress — that is an accepted trade.
 - **Accessibility and comfort.** Skip link, visible focus outlines, ARIA labels on controls,
-  generous line height, a reader-controlled font size, and tap targets of at least 48px.
+  generous line height, a reader-controlled font size, and tap targets of at least 44px.
 
 ---
 
@@ -80,7 +80,7 @@ ai-bondhu/
 │  ├─ din-1.html … din-30.html
 │  ├─ 404.html
 │  ├─ style.css          One stylesheet for the whole site
-│  ├─ script.js          One script, ~5KB, vanilla JS, no dependencies
+│  ├─ script.js          One script, ~10KB, vanilla JS, no dependencies
 │  ├─ robots.txt
 │  ├─ sitemap.xml
 │  └─ .nojekyll          Tells GitHub Pages not to run Jekyll
@@ -111,12 +111,12 @@ over HTTP instead:
 
 ```bash
 # Python 3 (already present on most machines)
-cd site
+cd docs
 python -m http.server 8000
 # then open http://localhost:8000
 
 # or, with Node installed
-npx serve site
+npx serve docs
 ```
 
 Testing checklist while developing:
@@ -155,7 +155,7 @@ gh repo create ai-bondhu --public --source=. --remote=origin --push
 Then in the repository on GitHub: **Settings → Pages → Build and deployment**
 
 - Source: *Deploy from a branch*
-- Branch: `main`, folder: **`/site`**
+- Branch: `main`, folder: **`/docs`**
 
 Pages will publish at `https://shasan7774.github.io/ai-bondhu/` within a couple of minutes.
 

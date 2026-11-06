@@ -1094,6 +1094,8 @@ main.hub{ max-width:none; margin:0; padding:0; }
   .main-nav{ order:2; flex-basis:auto; margin:0 0 0 auto; }
   .font-ctrl{ order:3; margin-inline-start:.6rem; }
   .nav-item{ flex:none; position:relative; }
-  .nav-item > ul{ inset-inline:auto; inset-inline-start:0; min-width:235px; }
-  .nav-item:last-child > ul{ inset-inline-start:auto; inset-inline-end:0; }
+  /* The menu sits at the right of the header, so every panel opens leftward from its
+     button's right edge -- a left-anchored panel ran past the viewport on pages where
+     the menu is the last header item (lesson, earn and profession pages). */
+  .nav-item > ul{ inset-inline:auto; inset-inline-end:0; min-width:235px; max-width:calc(100vw - 2rem); }
 }

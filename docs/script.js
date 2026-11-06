@@ -25,7 +25,8 @@
   }
 
   /* font-size control */
-  var fontStep = get("aib_font", 0);
+  var fontStep = parseInt(get("aib_font", 0), 10);
+  if (!(fontStep >= 0 && fontStep <= 2)) fontStep = 0;
   function applyFont(s) {
     document.documentElement.classList.remove("fs-1", "fs-2");
     if (s > 0) document.documentElement.classList.add("fs-" + s);
@@ -38,6 +39,9 @@
 
   /* step checkboxes */
   var steps = get("aib_steps", {});
+  // Stored data can be damaged (null, a number, an array): fall back to empty so the
+  // copy and "complete day" handlers below still get attached.
+  if (!steps || typeof steps !== "object" || Array.isArray(steps)) steps = {};
   document.querySelectorAll("[data-step-id]").forEach(function (cb) {
     var id = cb.getAttribute("data-step-id");
     if (steps[id]) cb.checked = true;
@@ -50,8 +54,8 @@
       var ta = document.createElement("textarea");
       ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
       document.body.appendChild(ta); ta.focus(); ta.select();
-      document.execCommand("copy"); document.body.removeChild(ta);
-      return true;
+      var ok = document.execCommand("copy"); document.body.removeChild(ta);
+      return ok === true;
     } catch (e) { return false; }
   }
   document.querySelectorAll("[data-copy]").forEach(function (btn) {

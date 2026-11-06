@@ -61,7 +61,10 @@
   .cert-progress-note{
     flex-basis:100%; margin:0; font-size:.85rem; color:var(--ink-soft);
   }
-  .cert-actions{ display:flex; flex-wrap:wrap; gap:.7rem; flex:0 0 auto; }
+  .cert-progress-note.is-locked{ order:-1; font-size:.95rem; color:var(--ink); background:var(--teal-tint); border-radius:12px; padding:.8rem 1rem; }
+  .cert-progress-note.is-locked a{ font-weight:700; }
+  .cert-field input:disabled{ background:#f3f3f3; cursor:not-allowed; }
+  .cert-actions{ display:flex; flex-wrap:wrap; gap:.7rem; flex:1 1 auto; min-width:0; max-width:100%; }
   #cert-download-btn,#cert-print-btn{ white-space:normal; }
   .btn-secondary{
     display:inline-flex; align-items:center; gap:.5rem; justify-content:center;
@@ -192,10 +195,10 @@
 
   <p class="day-label">সার্টিফিকেট</p>
   <h1>আপনার সার্টিফিকেট নিন</h1>
-  <p class="cert-intro">কোর্স শেষ করার (বা যেকোনো সময় শুরু করার) স্মারক হিসেবে নিজের নামে একটি সনদ তৈরি করুন। নিচে নাম লিখলেই সনদে সাথে সাথে তা বসে যাবে — কোথাও পাঠানো হয় না, শুধু এই পাতাতেই তৈরি হয় আর আপনার ব্রাউজারে জমা থাকে।</p>
+  <p class="cert-intro">৩০ দিনের কোর্সের সব পাঠ শেষ করলে এখানে নিজের নামে একটি সনদ তৈরি করতে পারবেন। কোর্স শেষ হলে নিচে নাম লিখলেই সনদে সাথে সাথে তা বসে যাবে — কোথাও পাঠানো হয় না, শুধু এই পাতাতেই তৈরি হয় আর আপনার ব্রাউজারে জমা থাকে।</p>
 
   <noscript>
-    <p class="cert-intro"><strong>আপনার ব্রাউজারে জাভাস্ক্রিপ্ট বন্ধ আছে।</strong> তাই নাম লাইভ বসানো বা অগ্রগতি দেখানো সম্ভব হচ্ছে না। নিচে সনদের নকশাটি দেখতে পাবেন — প্রিন্ট করে নিয়ে কলম দিয়ে নিজের নাম আর তারিখ হাতে লিখে নিতে পারেন। প্রিন্ট করতে ব্রাউজারের মেনু থেকে Print চাপুন (সাধারণত Ctrl+P)।</p>
+    <p class="cert-intro"><strong>আপনার ব্রাউজারে জাভাস্ক্রিপ্ট বন্ধ আছে।</strong> সনদ পেতে আপনার ৩০ দিনের অগ্রগতি যাচাই করতে হয়, আর সেটা জাভাস্ক্রিপ্ট ছাড়া সম্ভব নয়। জাভাস্ক্রিপ্ট চালু করে পাতাটি আবার খুলুন।</p>
   </noscript>
 
   <section class="cert-tools" aria-label="সনদ তৈরি করুন">
@@ -208,7 +211,7 @@
       <button type="button" id="cert-download-btn" class="btn-primary" disabled>ছবি হিসেবে ডাউনলোড করুন</button>
       <button type="button" id="cert-print-btn" class="btn-secondary" disabled>প্রিন্ট করুন / PDF বানান</button>
     </div>
-    <p class="cert-print-hint">"ছবি হিসেবে ডাউনলোড করুন" সনদটিকে একটি PNG ছবি বানিয়ে সরাসরি আপনার ডিভাইসে রাখে — ফেসবুকে শেয়ার করার জন্য সুবিধাজনক। "প্রিন্ট করুন / PDF বানান" দিয়ে কাগজে প্রিন্ট করতে পারবেন, অথবা প্রিন্ট ডায়ালগ থেকে "Save as PDF" বেছে নিয়ে PDF ফাইল হিসেবেও রাখতে পারবেন। দুটো বোতামই নাম ঠিকভাবে লেখার পর চালু হবে।</p>
+    <p class="cert-print-hint">"ছবি হিসেবে ডাউনলোড করুন" সনদটিকে একটি PNG ছবি বানিয়ে সরাসরি আপনার ডিভাইসে রাখে — ফেসবুকে শেয়ার করার জন্য সুবিধাজনক। "প্রিন্ট করুন / PDF বানান" দিয়ে কাগজে প্রিন্ট করতে পারবেন, অথবা প্রিন্ট ডায়ালগ থেকে "Save as PDF" বেছে নিয়ে PDF ফাইল হিসেবেও রাখতে পারবেন। ৩০ দিনের সব পাঠ শেষ হলে এবং নাম ঠিকভাবে লেখার পর দুটো বোতাম চালু হবে।</p>
     <p class="cert-download-note" id="cert-download-note" aria-live="polite"></p>
     <p class="cert-progress-note" id="cert-progress-note">আপনার অগ্রগতি দেখতে জাভাস্ক্রিপ্ট প্রয়োজন।</p>
   </section>
@@ -302,14 +305,23 @@
     if (noteEl) {
       var done = doneDays();
       if (done.length === 30) {
-        noteEl.textContent = "অভিনন্দন! আপনার ব্রাউজারের রেকর্ড অনুযায়ী আপনি ৩০ দিনের পুরো কোর্স সম্পন্ন করেছেন।";
-      } else if (done.length > 0) {
-        noteEl.textContent = "আপনার এই ব্রাউজারের রেকর্ড অনুযায়ী আপনি এখন পর্যন্ত ৩০ দিনের মধ্যে " + bn(done.length) + " দিন সম্পন্ন করেছেন। চাইলে এখনই সনদ নিতে পারেন, অথবা পুরো কোর্স শেষ করার পর ফিরে আসতে পারেন।";
+        noteEl.textContent = "অভিনন্দন! আপনার ব্রাউজারের রেকর্ড অনুযায়ী আপনি ৩০ দিনের পুরো কোর্স সম্পন্ন করেছেন। নিচে নাম লিখে সনদ নিন — যতবার দরকার ডাউনলোড বা প্রিন্ট করতে পারবেন।";
       } else {
-        noteEl.textContent = "এই ব্রাউজারে আপনার কোনো অগ্রগতির তথ্য পাওয়া যায়নি — চাইলে এখনই নাম দিয়ে সনদ তৈরি করে দেখতে পারেন।";
+        noteEl.textContent = "";
+        noteEl.classList.add("is-locked");
+        var strong = document.createElement("strong");
+        strong.textContent = "সনদটি এখনও তালাবদ্ধ। ";
+        noteEl.appendChild(strong);
+        noteEl.appendChild(document.createTextNode("৩০ দিনের সব পাঠ শেষ করলে সনদ খুলবে। আপনার এই ব্রাউজারের রেকর্ড অনুযায়ী এখন পর্যন্ত " + bn(done.length) + "/৩০ দিন সম্পন্ন হয়েছে। "));
+        var a = document.createElement("a");
+        a.href = "course.html#days";
+        a.textContent = done.length > 0 ? "পরের পাঠে চলুন" : "দিন ১ দিয়ে শুরু করুন";
+        noteEl.appendChild(a);
       }
     }
   } catch (e) {}
+
+  var COURSE_COMPLETE = doneDays().length === 30;
 
   var todayBn = "";
   try {
@@ -369,16 +381,18 @@
       errorEl.textContent = (touched && !result.ok) ? result.message : "";
     }
     if (input) {
-      input.setAttribute("aria-invalid", result.ok ? "false" : "true");
+      input.setAttribute("aria-invalid", (result.ok || !touched || input.disabled) ? "false" : "true");
     }
-    if (downloadBtn) downloadBtn.disabled = !result.ok;
-    if (printBtn) printBtn.disabled = !result.ok;
-    currentValidName = result.ok ? result.value : null;
+    var allowed = result.ok && COURSE_COMPLETE;
+    if (downloadBtn) downloadBtn.disabled = !allowed;
+    if (printBtn) printBtn.disabled = !allowed;
+    currentValidName = allowed ? result.value : null;
   }
 
   try {
     var saved = get("aib_cert_name", "");
     if (input && saved) { input.value = saved; }
+    if (input && !COURSE_COMPLETE) { input.disabled = true; }
     renderState();
     if (input) {
       input.addEventListener("input", function () {
