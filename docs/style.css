@@ -1099,3 +1099,15 @@ main.hub{ max-width:none; margin:0; padding:0; }
      the menu is the last header item (lesson, earn and profession pages). */
   .nav-item > ul{ inset-inline:auto; inset-inline-end:0; min-width:235px; max-width:calc(100vw - 2rem); }
 }
+
+/* share bar, progress backup, undo, save error */
+.share-bar{ max-width:var(--max-w); margin:2rem auto 1rem; padding:1rem; border:1px solid var(--border); border-radius:var(--radius); background:var(--card-bg); display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; }
+.share-bar p{ flex-basis:100%; margin:0; color:var(--ink-soft); }
+.share-bar a{ display:inline-flex; align-items:center; min-height:44px; padding:0 1rem; border-radius:var(--radius-sm); background:var(--teal); color:#fff; font-weight:600; text-decoration:none; }
+.share-bar a:hover,.share-bar a:focus-visible{ background:var(--teal-dark); }
+.backup-box{ margin-top:1.2rem; padding:.8rem 1rem; border:1px solid var(--border); border-radius:var(--radius); background:var(--card-bg); }
+.backup-box summary{ cursor:pointer; font-weight:600; min-height:44px; display:flex; align-items:center; }
+.backup-box input{ min-height:44px; padding:0 .6rem; border:1px solid var(--border-interactive); border-radius:var(--radius-sm); font:inherit; max-width:100%; }
+.backup-code strong{ font-family:monospace; font-size:1.15rem; letter-spacing:.05em; }
+.btn-undo{ min-height:44px; padding:0 1rem; margin-top:.6rem; border:1px solid var(--border-interactive); border-radius:var(--radius-sm); background:transparent; color:var(--ink); font:inherit; cursor:pointer; }
+.save-error{ color:#A34A2B; font-weight:600; }

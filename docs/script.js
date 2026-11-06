@@ -5,7 +5,7 @@
     try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : f; } catch (e) { return f; }
   }
   function set(k, v) {
-    try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {}
+    try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; }
   }
 
   var BN = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
@@ -144,11 +144,88 @@
     completeBtn.addEventListener("click", function () {
       var d = get("aib_done", []);
       if (!d || typeof d.length !== "number") d = [];
-      if (d.indexOf(day) === -1) { d.push(day); set("aib_done", d); }
+      if (d.indexOf(day) === -1) d.push(day);
+      if (!set("aib_done", d)) {
+        var err = document.createElement("p");
+        err.className = "save-error"; err.setAttribute("role", "alert");
+        err.textContent = "এই ব্রাউজারে অগ্রগতি সেভ করা যাচ্ছে না (হয়তো প্রাইভেট মোড বা ফেসবুক/হোয়াটসঅ্যাপের ভেতরের ব্রাউজার)। Chrome-এ সাইটটা খুলে আবার চেষ্টা করুন।";
+        completeBtn.insertAdjacentElement("afterend", err);
+        return;
+      }
       done = d;
       showDone();
       markDoneCards();
     });
+    if (confirmBox) {
+      var undo = document.createElement("button");
+      undo.type = "button"; undo.className = "btn-undo";
+      undo.textContent = "ভুল করে চাপ দিয়েছেন? ফিরিয়ে নিন";
+      undo.addEventListener("click", function () {
+        var d = get("aib_done", []);
+        if (!d || typeof d.length !== "number") d = [];
+        d = d.filter(function (n) { return n !== day; });
+        set("aib_done", d); done = d;
+        confirmBox.hidden = true; completeBtn.hidden = false; completeBtn.focus();
+        document.querySelectorAll('[data-day-card="' + day + '"]').forEach(function (a) {
+          a.classList.remove("is-done"); var sr = a.querySelector(".sr-only"); if (sr) sr.remove();
+        });
+      });
+      confirmBox.appendChild(undo);
+    }
+  }
+
+  /* homepage hero: returning learners continue where they stopped */
+  var heroCta = document.querySelector(".hero-actions .cta-button");
+  if (heroCta && done.length > 0 && done.length < 30) {
+    for (var h = 1; h <= 30 && done.indexOf(h) !== -1; h++) {}
+    heroCta.setAttribute("href", "din-" + h + ".html");
+    heroCta.firstChild.textContent = "চালিয়ে যান — দিন " + bn(h) + " ";
+  }
+
+  /* share bar on lessons, profession and earning pages */
+  if (/\/(din-\d+|pesha-[a-z]+|aay-\d+)\.html$/.test(location.pathname)) {
+    var host = document.querySelector("main");
+    if (host) {
+      var url = location.href.split("#")[0];
+      var msg = document.title + " — সহজ বাংলায় AI শিখুন, ফ্রি: " + url;
+      var bar = document.createElement("aside");
+      bar.className = "share-bar"; bar.setAttribute("aria-label", "শেয়ার করুন");
+      bar.innerHTML = '<p>উপকারী লাগলে পরিচিতদের পাঠান:</p>';
+      [["হোয়াটসঅ্যাপে পাঠান", "https://wa.me/?text=" + encodeURIComponent(msg)],
+       ["ফেসবুকে শেয়ার করুন", "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url)]]
+        .forEach(function (x) {
+          var a = document.createElement("a");
+          a.href = x[1]; a.textContent = x[0]; a.target = "_blank"; a.rel = "noopener";
+          bar.appendChild(a);
+        });
+      host.appendChild(bar);
+    }
+  }
+
+  /* progress backup / restore code (course page) */
+  var progSec = document.getElementById("progress");
+  if (progSec) {
+    var mask = 0;
+    done.forEach(function (n) { if (n >= 1 && n <= 30) mask |= (1 << (n - 1)); });
+    var box = document.createElement("details");
+    box.className = "backup-box";
+    box.innerHTML = '<summary>নতুন ফোনে অগ্রগতি নিয়ে যান</summary>' +
+      '<p>এই কোডটা লিখে রাখুন। নতুন ফোন বা ব্রাউজারে এখানে কোডটা দিলে আপনার সম্পূর্ণ করা দিনগুলো ফিরে আসবে।</p>' +
+      '<p class="backup-code">আপনার কোড: <strong></strong></p>' +
+      '<label for="backup-in">আগের কোড দিন:</label> <input id="backup-in" type="text" autocomplete="off" spellcheck="false"> ' +
+      '<button type="button" class="btn-undo">ফিরিয়ে আনুন</button><p class="backup-msg" aria-live="polite"></p>';
+    box.querySelector("strong").textContent = "AIB-" + mask.toString(36).toUpperCase();
+    box.querySelector("button").addEventListener("click", function () {
+      var v = box.querySelector("input").value.trim().toUpperCase().replace(/^AIB-?/, "");
+      var m = /^[0-9A-Z]{1,6}$/.test(v) ? parseInt(v, 36) : NaN;
+      var out = box.querySelector(".backup-msg");
+      if (isNaN(m) || m < 0 || m >= (1 << 30)) { out.textContent = "কোডটা ঠিক মনে হচ্ছে না — আবার দেখে লিখুন।"; return; }
+      var d = [];
+      for (var i = 0; i < 30; i++) if (m & (1 << i)) d.push(i + 1);
+      if (set("aib_done", d)) { out.textContent = "অগ্রগতি ফিরে এসেছে — " + bn(d.length) + " দিন। পাতাটা আবার লোড হচ্ছে…"; setTimeout(function () { location.reload(); }, 900); }
+      else out.textContent = "এই ব্রাউজারে সেভ করা যাচ্ছে না। Chrome-এ খুলে চেষ্টা করুন।";
+    });
+    progSec.appendChild(box);
   }
 
   var fill = document.querySelector("[data-prog-fill]");
@@ -205,7 +282,12 @@
   });
 
   document.addEventListener('click', function (e) {
-    if (!nav.contains(e.target)) closeAll(null);
+    if (!nav.contains(e.target) || e.target.closest('.nav-item a')) closeAll(null);
+  });
+  items.forEach(function (d) {
+    d.addEventListener('focusout', function (e) {
+      if (e.relatedTarget && !d.contains(e.relatedTarget)) d.open = false;
+    });
   });
 
   document.addEventListener('keydown', function (e) {
